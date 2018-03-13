@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:flutter/material.dart';
 
 
 class BottomNavigation extends StatefulWidget {
-  //todo?: deleted: static const String routeName = '/material/bottom_navigation';
+  static const String route = '/screens/bottom_navigation';
 
   @override
   _BottomNavigationState createState() => new _BottomNavigationState();
@@ -23,19 +24,26 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
   void initState() {
     super.initState();
 
-    const barColor = Colors.lightBlue;
+    Color barColor = Constants.augmentalColor;
 
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
-        icon: const Icon(Icons.work),
-        title: 'Main',
+        icon: const Icon(Icons.home),
+        title: 'Home',
         color: barColor,
         vsync: this,
       ),
 
       new NavigationIconView(
         icon: const Icon(Icons.message),
-        title: 'Messages',
+        title: 'Chat',
+        color: barColor,
+        vsync: this,
+      ),
+
+      new NavigationIconView(
+        icon: const Icon(Icons.remove_red_eye),
+        title: 'Unity',
         color: barColor,
         vsync: this,
       ),
@@ -91,6 +99,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
   @override
   Widget build(BuildContext context) {
     final BottomNavigationBar botNavBar = new BottomNavigationBar(
+      fixedColor: Constants.augmentalColor,
       items: _navigationViews
           .map((NavigationIconView navigationView) => navigationView.item)
           .toList(),
@@ -106,30 +115,10 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
     );
 
     return new Scaffold(
-      appBar: null,//new AppBar(
-//        actions: <Widget>[
-//          new PopupMenuButton<BottomNavigationBarType>(
-//            onSelected: (BottomNavigationBarType value) {
-//              setState(() {
-//                _type = value;
-//              });
-//            },
-//            itemBuilder: (BuildContext context) => <PopupMenuItem<BottomNavigationBarType>>[
-//              const PopupMenuItem<BottomNavigationBarType>(
-//                value: BottomNavigationBarType.fixed,
-//                child: const Text('Fixed'),
-//              ),
-//              const PopupMenuItem<BottomNavigationBarType>(
-//                value: BottomNavigationBarType.shifting,
-//                child: const Text('Shifting'),
-//              )
-//            ],
-//          )
-//        ],
-//      ),
+      appBar: null,
       body: new Center(
           child: _buildTransitionsStack()
-      ),//new Center(child: _buildTransitionsStack()),
+      ),
       bottomNavigationBar: botNavBar,
     );
   }

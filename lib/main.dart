@@ -1,3 +1,4 @@
+import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +10,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Augmental',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+//      theme: new ThemeData(
+//        primarySwatch: Constants.augmentalColor,
+//      ),
       routes: routes,
 
       //home: new MyHomePage(title: 'Flutter Demo Home Page'),

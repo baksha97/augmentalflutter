@@ -1,3 +1,4 @@
+import 'package:augmentalflutter/screens/bottom_navigation/bottom_navigation.dart';
 import 'package:augmentalflutter/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,7 @@ final Router appRouter = new Router._private();
 final routes = {
   '/' :          (BuildContext context) => new LoginScreen(), //default route
   LoginScreen.route:         (BuildContext context) => new LoginScreen(),
-//  '/bottom_navigation':         (BuildContext context) => new BottomNavigation(),
-//  '/bottom_navigation/profile/home':         (BuildContext context) => new HomeScreen(),
-//  '/screens/bottom_navigation/main_screen/delivery_screen':         (BuildContext context) => new DeliveryScreen(),
+  BottomNavigation.route:         (BuildContext context) => new BottomNavigation(),
 };
 
 //Singleton

@@ -1,3 +1,4 @@
+import 'package:augmentalflutter/constants.dart';
 import 'package:flutter/material.dart';
 
 class NavigationIconView {
@@ -55,7 +56,7 @@ class NavigationIconView {
         ////
         child: new IconTheme(
           data: new IconThemeData(
-            color: iconColor,
+            color: Constants.augmentalColor,
             size: 120.0,
           ),
           child: new Semantics(
