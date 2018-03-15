@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:augmentalflutter/assets.dart';
+import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/bubble.dart';
 import 'package:augmentalflutter/routes.dart';
+import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,12 +80,14 @@ class ChatScreenState extends State<ChatScreen> {
 
   final TextEditingController _textController = new TextEditingController();
   bool _isTyping = false;
-  final googleSignIn = new GoogleSignIn();
+  GoogleSignIn googleSignIn = new GoogleSignIn();
   //final analytics = new FirebaseAnalytics();
   final auth = FirebaseAuth.instance;
 
   //final messagesReference = Firestore.instance.collection('chats/NJDDkXJaHN2luwdT8bca/messages');
   //final chatReference = Firestore.instance.document('chats/NJDDkXJaHN2luwdT8bca/');
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +111,7 @@ class ChatScreenState extends State<ChatScreen> {
                          // return new Bubble(snapshot: document, displayName: googleSignIn.currentUser.displayName,);
                           return new ListTile(
                             title:
-                              new Bubble(snapshot: document, displayName: 'Travis Baksh'),
+                              new Bubble(snapshot: document, displayName: (UserAuth.displayName)),
                             //new ChatMessage(snapshot: document),//Bubble(snapshot: document, displayName: googleSignIn.currentUser.displayName,),//new Text(document['text']),
                             onTap: (){
                               print('tapped');
@@ -222,51 +226,51 @@ class ChatScreenState extends State<ChatScreen> {
 
 }
 
-class ChatMessage extends StatelessWidget {
-  ChatMessage({this.snapshot,}); //this.animation});
-  final DocumentSnapshot snapshot;
-//  final Animation animation;
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      //new SizeTransition(
-//        sizeFactor: new CurvedAnimation(
-//            parent: animation,
-//            curve: Curves.easeOut
-//        ),
-        //axisAlignment: 0.0,
-        child: new Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: new Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-
-              new Container(
-                margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(
-                    backgroundImage: new NetworkImage(snapshot.data['senderPhotoUrl']),
-                   // radius: 10.0,
-                )
-              ),
-
-              new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Text(snapshot.data['senderName'], style: Theme.of(context).textTheme.subhead),
-                  new Container(
-                    margin: const EdgeInsets.only(top: 5.0),
-                    child: snapshot.data['imageUrl'] != null ?
-                    new Image.network(
-                      snapshot.data['imageUrl'],
-                      width: 250.0,
-                    ) : new Text(snapshot.data['text'], softWrap: true,),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-    );
-  }
-}
-
+//class ChatMessage extends StatelessWidget {
+//  ChatMessage({this.snapshot,}); //this.animation});
+//  final DocumentSnapshot snapshot;
+////  final Animation animation;
+//  @override
+//  Widget build(BuildContext context) {
+//    return new Container(
+//      //new SizeTransition(
+////        sizeFactor: new CurvedAnimation(
+////            parent: animation,
+////            curve: Curves.easeOut
+////        ),
+//        //axisAlignment: 0.0,
+//        child: new Container(
+//          margin: const EdgeInsets.symmetric(vertical: 10.0),
+//          child: new Row(
+//            crossAxisAlignment: CrossAxisAlignment.start,
+//            children: <Widget>[
+//
+//              new Container(
+//                margin: const EdgeInsets.only(right: 16.0),
+//                child: new CircleAvatar(
+//                    backgroundImage: new NetworkImage(snapshot.data['senderPhotoUrl']),
+//                   // radius: 10.0,
+//                )
+//              ),
+//
+//              new Column(
+//                crossAxisAlignment: CrossAxisAlignment.start,
+//                children: <Widget>[
+//                  new Text(snapshot.data['senderName'], style: Theme.of(context).textTheme.subhead),
+//                  new Container(
+//                    margin: const EdgeInsets.only(top: 5.0),
+//                    child: snapshot.data['imageUrl'] != null ?
+//                    new Image.network(
+//                      snapshot.data['imageUrl'],
+//                      width: 250.0,
+//                    ) : new Text(snapshot.data['text'], softWrap: true,),
+//                  ),
+//                ],
+//              ),
+//            ],
+//          ),
+//        )
+//    );
+//  }
+//}
+//

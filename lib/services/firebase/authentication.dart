@@ -6,6 +6,7 @@ class UserAuth {
 
   static FirebaseAuth _auth = FirebaseAuth.instance;
   static final _googleSignIn = new GoogleSignIn();
+  static String displayName;
 
   //ensure logged in
   static Future<Null> ensureLoggedIn() async {
@@ -18,6 +19,7 @@ class UserAuth {
       GoogleSignInAuthentication credentials = await _googleSignIn.currentUser.authentication;
       await _auth.signInWithGoogle(idToken: credentials.idToken, accessToken: credentials.accessToken);
     }
+    displayName = _googleSignIn.currentUser.displayName;
   }
 
   static Future<bool> isSignedIn() async{
