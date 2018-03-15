@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,14 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: const Icon(Icons.home),
         title: 'Home',
+        view: new Center(
+          child:
+          new Image.asset(
+            'assets/test.gif',
+            width: 400.0,
+            height: 400.0,
+          ),
+        ),
         color: barColor,
         vsync: this,
       ),
@@ -42,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       ),
 
       new NavigationIconView(
-        icon: const Icon(Icons.remove_red_eye),
+        icon: new Icon(Assets.augmentalIconData),// Constants.icon,//const Icon(Icons.remove_red_eye),
         title: 'Unity',
         color: barColor,
         vsync: this,

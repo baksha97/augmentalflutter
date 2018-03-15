@@ -6,10 +6,12 @@ class NavigationIconView {
     Widget icon,
     String title,
     Color color,
+    Widget view,
     TickerProvider vsync,
   }) : _icon = icon,
         _color = color,
         _title = title,
+        _view = view,
         item = new BottomNavigationBarItem(
           icon: icon,
           title: new Text(title),
@@ -28,6 +30,7 @@ class NavigationIconView {
   final Widget _icon;
   final Color _color;
   final String _title;
+  final Widget _view;
   final BottomNavigationBarItem item;
   final AnimationController controller;
   CurvedAnimation _animation;
@@ -43,6 +46,8 @@ class NavigationIconView {
           : themeData.accentColor;
     }
 
+
+
     return new FadeTransition(
       opacity: _animation,
       child: new SlideTransition(
@@ -54,16 +59,20 @@ class NavigationIconView {
 
         //TODO: PERSONALIZE VIEW IN HERE.
         ////
-        child: new IconTheme(
-          data: new IconThemeData(
-            color: Constants.augmentalColor,
-            size: 120.0,
+        child: _view ??
+         new Center(
+           child:
+            new IconTheme(
+            data: new IconThemeData(
+              color: _color,
+              size: 120.0,
+            ),
+            child: new Semantics(
+              label: 'Placeholder for $_title tab',
+              child: _icon,
+            ),
           ),
-          child: new Semantics(
-            label: 'Placeholder for $_title tab',
-            child: _icon,
-          ),
-        ),
+         ),
        ///
 
       ),

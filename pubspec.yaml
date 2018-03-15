@@ -33,6 +33,9 @@ flutter:
   assets:
     - assets/augmental_logo.jpg
     - assets/augmental_name.png
+    - assets/test.gif
+    - assets/unity_black.png
+    - assets/unity_white.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -46,10 +49,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: icomoon
+       fonts:
+         - asset: fonts/icomoon.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
