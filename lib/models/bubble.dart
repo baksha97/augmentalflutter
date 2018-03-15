@@ -46,6 +46,7 @@ class Bubble extends StatelessWidget {
                 ),
               ):
               new Container(),
+        new Expanded(child:
         new Column(
         crossAxisAlignment: align,
         children: <Widget>[
@@ -69,6 +70,7 @@ class Bubble extends StatelessWidget {
                   child: new Column(
                     crossAxisAlignment: align,
                     children: <Widget>[
+                      //TODO: FIX WRAPING
                       new Text(message, softWrap: true,),
                       isNotMe ? new Text(
                         senderName,
@@ -106,6 +108,7 @@ class Bubble extends StatelessWidget {
           )
         ],
       ),
+        ),
       ],
     );
   }

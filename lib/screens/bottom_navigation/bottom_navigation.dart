@@ -61,7 +61,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
 
       new NavigationIconView(
         icon: const Icon(Icons.person_outline),
-        title: 'Profile',
+        title: '',
         color: barColor,
         vsync: this,
       ),
