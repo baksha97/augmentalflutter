@@ -5,6 +5,7 @@
 import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
 import 'package:flutter/material.dart';
 
 
@@ -46,6 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: const Icon(Icons.message),
         title: 'Chat',
+        view:  new ChatSelection(),
         color: barColor,
         vsync: this,
       ),

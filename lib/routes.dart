@@ -1,4 +1,5 @@
 import 'package:augmentalflutter/screens/bottom_navigation/bottom_navigation.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
 import 'package:augmentalflutter/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,13 @@ class Router{
 
   void pushReplacementTo(BuildContext cxt, String path){
     Navigator.of(cxt).pushReplacementNamed(path);
+  }
+
+  void pushChatScreen(BuildContext cxt, String chatReference){
+    MaterialPageRoute chat =  new MaterialPageRoute(
+        builder: (cxt) => new ChatScreen(chatReference: chatReference)
+    );
+    Navigator.push(cxt, chat);
   }
 
 }

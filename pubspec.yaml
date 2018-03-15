@@ -6,10 +6,11 @@ dependencies:
     sdk: flutter
   image_picker:                                             # new
   google_sign_in:
-  #firebase_analytics:
+  firebase_analytics:
   firebase_auth:
   firebase_database:
   firebase_storage:
+  cloud_firestore: "^0.3.0"
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
