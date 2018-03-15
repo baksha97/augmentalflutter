@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/bubble.dart';
@@ -84,10 +84,19 @@ class ChatScreenState extends State<ChatScreen> {
   //final analytics = new FirebaseAnalytics();
   final auth = FirebaseAuth.instance;
 
-  //final messagesReference = Firestore.instance.collection('chats/NJDDkXJaHN2luwdT8bca/messages');
-  //final chatReference = Firestore.instance.document('chats/NJDDkXJaHN2luwdT8bca/');
+  var formatter = new DateFormat.yMd().add_jm();
+ // String formatted = formatter.format(new DateTime.now());
 
+  ScrollController _scrollController;
+  @override                                                           // NEW
+  void initState() {                                                  // NEW
+    super.initState();                                                // NEW
+    _scrollController = new ScrollController(                         // NEW
+      initialScrollOffset: 0.0,                                       // NEW
+      keepScrollOffset: true,                                         // NEW
+    );
 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,16 +115,15 @@ class ChatScreenState extends State<ChatScreen> {
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) return new Text('Loading...');
                       return new ListView(
+                        reverse: false,
+                        shrinkWrap: true,
                         children: snapshot.data.documents.map((document) {
                         //  return
                          // return new Bubble(snapshot: document, displayName: googleSignIn.currentUser.displayName,);
                           return new ListTile(
                             title:
-                              new Bubble(snapshot: document, displayName: (UserAuth.displayName)),
-                            //new ChatMessage(snapshot: document),//Bubble(snapshot: document, displayName: googleSignIn.currentUser.displayName,),//new Text(document['text']),
-                            onTap: (){
-                              print('tapped');
-                            },
+                              new Bubble(snapshot: document),
+                            onTap: (){},
                             //subtitle: new Text(document['senderName']),
                           );
                         }).toList(),
@@ -201,6 +209,7 @@ class ChatScreenState extends State<ChatScreen> {
       'imageUrl': imageUrl,
       'senderName': googleSignIn.currentUser.displayName,
       'senderPhotoUrl': googleSignIn.currentUser.photoUrl,
+      'timestamp' : formatter.format(new DateTime.now()),
     });
 
     widget._chatRef.updateData({

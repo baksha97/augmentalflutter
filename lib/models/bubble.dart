@@ -1,15 +1,16 @@
 import 'package:augmentalflutter/constants.dart';
+import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Bubble extends StatelessWidget {
-  Bubble({@required DocumentSnapshot snapshot, @required String displayName}):
+  Bubble({@required DocumentSnapshot snapshot}):
       message = snapshot.data['text'],
-      time = '',//snapshot.data['text']
+      time = snapshot.data['timestamp'] ?? '',//snapshot.data['text']
       senderName = snapshot.data['senderName'],
       senderPhotoUrl = snapshot.data['senderPhotoUrl'],
-      isNotMe = (displayName != snapshot.data['senderName']),
+      isNotMe = (UserAuth.displayName != snapshot.data['senderName']),
       delivered = true
       ;
   //final googleSignIn = new GoogleSignIn();
@@ -89,11 +90,6 @@ class Bubble extends StatelessWidget {
                   right: 0.0,
                   child: new Row(
                     children: <Widget>[
-                      new Text(time,
-                          style: new TextStyle(
-                            color: Colors.black38,
-                            fontSize: 10.0,
-                          )),
                       new SizedBox(width: 3.0),
                       new Icon(
                         icon,
@@ -105,7 +101,12 @@ class Bubble extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+    new Text(time,
+    style: new TextStyle(
+    color: Colors.black38,
+    fontSize: 10.0,
+    )),
         ],
       ),
         ),
