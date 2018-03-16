@@ -22,6 +22,11 @@ class UserAuth {
     displayName = _googleSignIn.currentUser.displayName;
   }
 
+  static Future<Null> signOut() async {
+    await _googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+  }
+
   static Future<bool> isSignedIn() async{
     return await _auth.currentUser() == null;
   }

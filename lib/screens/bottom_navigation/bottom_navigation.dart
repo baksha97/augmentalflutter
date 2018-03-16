@@ -6,6 +6,7 @@ import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
+import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
 
 
@@ -61,7 +62,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
 
       new NavigationIconView(
         icon: const Icon(Icons.person_outline),
-        title: '',
+        title: 'Profile',
         color: barColor,
         vsync: this,
       ),
@@ -121,6 +122,10 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
           _navigationViews[_currentIndex].controller.reverse();
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
+          //TODO: REMOVE AFTER LOGOUT METHOD CREATED
+          if(_currentIndex == _navigationViews.length-1){
+            UserAuth.signOut();
+          }
         });
       },
     );

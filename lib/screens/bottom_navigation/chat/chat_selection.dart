@@ -25,6 +25,8 @@ class ChatSelection extends StatefulWidget {
 }
 
 class ChatSelectionState extends State<ChatSelection> {
+  static const double height = 366.0;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -43,18 +45,11 @@ class ChatSelectionState extends State<ChatSelection> {
                   return new ListView(
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
-                        title: new Text(document['name']),
-                        onTap: () {
-                          appRouter.pushChatScreen(
-                            context,
-                            document.documentID,
-                            document['name'],
-                          );
-                          print('tapped');
-                        },
-                        subtitle: new Text(
-                            document['last-message'],
-                        ),
+                        title:
+                            _buildCard(document), //new Text(document['name']),
+//                        subtitle: new Text(
+//                            document['last-message'],
+//                        ),
                       );
                     }).toList(),
                   );
@@ -62,6 +57,107 @@ class ChatSelectionState extends State<ChatSelection> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(DocumentSnapshot snapshot) {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle titleStyle =
+        theme.textTheme.headline.copyWith(color: Colors.white);
+    final TextStyle descriptionStyle = theme.textTheme.subhead;
+
+    return new SafeArea(
+      top: false,
+      bottom: false,
+      child: new Container(
+        padding: const EdgeInsets.all(8.0),
+        height: height,
+        child: new Card(
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // photo and title
+              new SizedBox(
+                height: 184.0,
+                child: new Stack(
+                  children: <Widget>[
+                    new Positioned.fill(
+                      child: new Image.asset(
+                        'assets/test.gif',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    new Positioned(
+                      bottom: 16.0,
+                      left: 16.0,
+                      right: 16.0,
+                      child: new FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: new Text(
+                          snapshot['name'],
+                          style: titleStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // description and share/explore buttons
+              new Expanded(
+                child: new Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+                  child: new DefaultTextStyle(
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    style: descriptionStyle,
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // three line description
+                        new Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: new Text(
+                            'Enchance your _ capablities',
+                            style: descriptionStyle.copyWith(
+                                color: Colors.black54),
+                          ),
+                        ),
+                        new Text(
+                          'Let\'s begin your journey in',
+                          softWrap: true,
+                        ),
+                        new Text('Augmental by simply tracking your'),
+                        new Text('hands'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // share, explore buttons
+              new ButtonTheme.bar(
+                child: new ButtonBar(
+                  alignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    new FlatButton(
+                      child: const Text('CHAT'),
+                      textColor: Constants.augmentalColor,
+                      onPressed: () {
+                        appRouter.pushChatScreen(
+                          context,
+                          snapshot.documentID,
+                          snapshot['name'],
+                        );
+                        print('tapped');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -90,11 +186,15 @@ class ChatScreenState extends State<ChatScreen> {
   GoogleSignIn googleSignIn = new GoogleSignIn();
   final analytics = new FirebaseAnalytics();
   final auth = FirebaseAuth.instance;
-
   var formatter = new DateFormat.yMd().add_jm();
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle titleStyle =
+        theme.textTheme.headline.copyWith(color: Colors.white);
+    final TextStyle descriptionStyle = theme.textTheme.subhead;
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget._chatName),
@@ -111,12 +211,16 @@ class ChatScreenState extends State<ChatScreen> {
                   return new ListView(
                     reverse: true,
                     //shrinkWrap: true,
-                    children: snapshot.data.documents.map((document) {
-                      return new ListTile(
-                        title: new Bubble(snapshot: document),
-                        onTap: () {},
-                      );
-                    }).toList().reversed.toList(),
+                    children: snapshot.data.documents
+                        .map((document) {
+                          return new ListTile(
+                            title: new Bubble(snapshot: document),
+                            onTap: () {},
+                          );
+                        })
+                        .toList()
+                        .reversed
+                        .toList(),
                   );
                 },
               ),

@@ -3,6 +3,7 @@ import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Bubble extends StatelessWidget {
   Bubble({@required DocumentSnapshot snapshot})
@@ -35,7 +36,7 @@ class Bubble extends StatelessWidget {
         new Container(
           margin: const EdgeInsets.only(right: 5.0),
           child: new CircleAvatar(
-            backgroundImage: new NetworkImage(senderPhotoUrl),
+            backgroundImage: new CachedNetworkImageProvider(senderPhotoUrl),
           ),
         ),
         new Expanded(
@@ -66,9 +67,11 @@ class Bubble extends StatelessWidget {
                             child: imageUrl != null
                                 //TODO: Add EdgeInsets to image inside of bubble.
                                 ? new Container(
-                                    child: new Image.network(
-                                      imageUrl,
-                                      width: 250.0,
+                                    child: new CachedNetworkImage(
+                                      imageUrl: imageUrl,
+                                      placeholder:
+                                          new CircularProgressIndicator(),
+                                      errorWidget: new Icon(Icons.error),
                                     ),
                                   )
                                 : new Text(
@@ -124,7 +127,7 @@ class Bubble extends StatelessWidget {
       topLeft: new Radius.circular(30.0),
       topRight: new Radius.circular(30.0),
       bottomLeft: new Radius.circular(30.0),
-     // bottomRight: new Radius.circular(0.0),
+      // bottomRight: new Radius.circular(0.0),
     );
 
     return new Row(
@@ -160,9 +163,11 @@ class Bubble extends StatelessWidget {
                             child: imageUrl != null
                                 //TODO: Add EdgeInsets to image inside of bubble.
                                 ? new Container(
-                                    child: new Image.network(
-                                      imageUrl,
-                                      width: 250.0,
+                                    child: new CachedNetworkImage(
+                                      imageUrl: imageUrl,
+                                      placeholder:
+                                          new CircularProgressIndicator(),
+                                      errorWidget: new Icon(Icons.error),
                                     ),
                                   )
                                 : new Text(
@@ -203,7 +208,6 @@ class Bubble extends StatelessWidget {
   }
 
   //TODO: add image catching for faster image loading.
-  //TODO: add indicator for when NetworkImages are being rendered.
   @override
   Widget build(BuildContext context) {
     if (isCurrentUser) {
