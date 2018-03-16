@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:augmentalflutter/models/chat_card.dart';
+import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:augmentalflutter/constants.dart';
@@ -46,10 +48,7 @@ class ChatSelectionState extends State<ChatSelection> {
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
                         title:
-                            _buildCard(document), //new Text(document['name']),
-//                        subtitle: new Text(
-//                            document['last-message'],
-//                        ),
+                          new ChatCard(snapshot: document,),
                       );
                     }).toList(),
                   );
@@ -57,107 +56,6 @@ class ChatSelectionState extends State<ChatSelection> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCard(DocumentSnapshot snapshot) {
-    final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle =
-        theme.textTheme.headline.copyWith(color: Colors.white);
-    final TextStyle descriptionStyle = theme.textTheme.subhead;
-
-    return new SafeArea(
-      top: false,
-      bottom: false,
-      child: new Container(
-        padding: const EdgeInsets.all(8.0),
-        height: height,
-        child: new Card(
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // photo and title
-              new SizedBox(
-                height: 184.0,
-                child: new Stack(
-                  children: <Widget>[
-                    new Positioned.fill(
-                      child: new Image.asset(
-                        'assets/test.gif',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    new Positioned(
-                      bottom: 16.0,
-                      left: 16.0,
-                      right: 16.0,
-                      child: new FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: new Text(
-                          snapshot['name'],
-                          style: titleStyle,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // description and share/explore buttons
-              new Expanded(
-                child: new Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-                  child: new DefaultTextStyle(
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,
-                    style: descriptionStyle,
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        // three line description
-                        new Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: new Text(
-                            'Enchance your _ capablities',
-                            style: descriptionStyle.copyWith(
-                                color: Colors.black54),
-                          ),
-                        ),
-                        new Text(
-                          'Let\'s begin your journey in',
-                          softWrap: true,
-                        ),
-                        new Text('Augmental by simply tracking your'),
-                        new Text('hands'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // share, explore buttons
-              new ButtonTheme.bar(
-                child: new ButtonBar(
-                  alignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    new FlatButton(
-                      child: const Text('CHAT'),
-                      textColor: Constants.augmentalColor,
-                      onPressed: () {
-                        appRouter.pushChatScreen(
-                          context,
-                          snapshot.documentID,
-                          snapshot['name'],
-                        );
-                        print('tapped');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -190,10 +88,6 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle =
-        theme.textTheme.headline.copyWith(color: Colors.white);
-    final TextStyle descriptionStyle = theme.textTheme.subhead;
 
     return new Scaffold(
       appBar: new AppBar(
@@ -248,7 +142,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                    await _ensureLoggedIn();
+                    await UserAuth.ensureLoggedIn();
                     File image = await ImagePicker.pickImage();
                     int r = new Random().nextInt(100000);
                     StorageReference ref =
@@ -291,7 +185,7 @@ class ChatScreenState extends State<ChatScreen> {
     setState(() {
       _isTyping = false;
     });
-    await _ensureLoggedIn();
+    await UserAuth.ensureLoggedIn();
     _sendMessage(text: text);
   }
 
@@ -308,21 +202,6 @@ class ChatScreenState extends State<ChatScreen> {
       'senderName': googleSignIn.currentUser.displayName,
       'last-message': text ?? 'Image',
     });
-    //analytics.logEvent(name: 'send_message');
-  }
-
-  Future<Null> _ensureLoggedIn() async {
-    GoogleSignInAccount user = googleSignIn.currentUser;
-    if (user == null) user = await googleSignIn.signInSilently();
-    if (user == null) {
-      await googleSignIn.signIn();
-      //analytics.logLogin();
-    }
-    if (auth.currentUser == null) {
-      GoogleSignInAuthentication credentials =
-          await googleSignIn.currentUser.authentication;
-      await auth.signInWithGoogle(
-          idToken: credentials.idToken, accessToken: credentials.accessToken);
-    }
+    analytics.logEvent(name: 'send_message');
   }
 }
