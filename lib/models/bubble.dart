@@ -5,112 +5,186 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Bubble extends StatelessWidget {
-  Bubble({@required DocumentSnapshot snapshot}):
-      message = snapshot.data['text'],
-      time = snapshot.data['timestamp'] ?? '',//snapshot.data['text']
-      senderName = snapshot.data['senderName'],
-      senderPhotoUrl = snapshot.data['senderPhotoUrl'],
-      isNotMe = (UserAuth.displayName != snapshot.data['senderName']),
-      delivered = true
-      ;
-  //final googleSignIn = new GoogleSignIn();
+  Bubble({@required DocumentSnapshot snapshot})
+      : message = snapshot.data['text'],
+        time = snapshot.data['timestamp'] ?? '', //snapshot.data['text']
+        senderName = snapshot.data['senderName'],
+        senderPhotoUrl = snapshot.data['senderPhotoUrl'],
+        isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']);
+
   final String message, time, senderName, senderPhotoUrl;
-  final delivered, isNotMe;
+  final isCurrentUser;
+  final icon = Icons.done_all;
 
-  @override
-  Widget build(BuildContext context) {
-    final bg = isNotMe ? Colors.white : Colors.lightBlue.shade100;//Colors.greenAccent.shade100;
-    final align = isNotMe ? CrossAxisAlignment.start : CrossAxisAlignment.end;
-    final mainAxisAlignment = isNotMe ? MainAxisAlignment.start : MainAxisAlignment.end;
+  Widget _otherUserBubble() {
+    final bg = Colors.grey.shade100;
+    final align = CrossAxisAlignment.start;
+    final mainAxisAlignment = MainAxisAlignment.start;
 
-    final icon = delivered ? Icons.done_all : Icons.done;
-    final radius = isNotMe
-        ? new  BorderRadius.only(
-      topRight: new Radius.circular(5.0),
-      bottomLeft: new  Radius.circular(10.0),
-      bottomRight: new  Radius.circular(5.0),
-    )
-        : new BorderRadius.only(
-      topLeft: new Radius.circular(5.0),
-      bottomLeft: new Radius.circular(5.0),
-      bottomRight: new Radius.circular(10.0),
+    final radius = new BorderRadius.only(
+      topRight: new Radius.circular(30.0),
+      bottomLeft: new Radius.circular(10.0),
+      bottomRight: new Radius.circular(30.0),
     );
+
     return new Row(
       crossAxisAlignment: align,
       mainAxisAlignment: mainAxisAlignment,
       children: <Widget>[
-        isNotMe ? new Container(
-                margin: const EdgeInsets.only(right: 5.0),
-                child: new CircleAvatar(
-                  backgroundImage: new NetworkImage(senderPhotoUrl),
-                  // radius: 10.0,
-                ),
-              ):
-              new Container(),
-        new Expanded(child:
-        new Column(
-        crossAxisAlignment: align,
-        children: <Widget>[
-          new Container(
-            margin: const EdgeInsets.all(3.0),
-            padding: const EdgeInsets.all(8.0),
-            decoration: new BoxDecoration(
-              boxShadow: [
-                new BoxShadow(
-                    blurRadius: .5,
-                    spreadRadius: 1.0,
-                    color: Colors.black.withOpacity(.12))
-              ],
-              color: bg,
-              borderRadius: radius,
-            ),
-            child: new Stack(
-              children: <Widget>[
-                new Padding(
-                  padding: new EdgeInsets.only(right: 20.0),//48.0),
-                  child: new Column(
-                    crossAxisAlignment: align,
-                    children: <Widget>[
-                      //TODO: FIX WRAPING
-                      new Text(message, softWrap: true,),
-                      isNotMe ? new Text(
-                        senderName,
-                        style: new TextStyle(
-                          color: Colors.black45,
-                          fontSize: 13.0,
-                        ),
-                      ):
-                        new Text(''),
-
-                    ],
-                  ),
-                ),
-                new Positioned(
-                  bottom: 0.0,
-                  right: 0.0,
-                  child: new Row(
-                    children: <Widget>[
-                      new SizedBox(width: 3.0),
-                      new Icon(
-                        icon,
-                        size: 12.0,
-                        color: Colors.black38,
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+        new Container(
+          margin: const EdgeInsets.only(right: 5.0),
+          child: new CircleAvatar(
+            backgroundImage: new NetworkImage(senderPhotoUrl),
+            // radius: 10.0,
           ),
-    new Text(time,
-    style: new TextStyle(
-    color: Colors.black38,
-    fontSize: 10.0,
-    )),
-        ],
-      ),
+        ),
+        new Expanded(
+          child: new Column(
+            crossAxisAlignment: align,
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(8.0),
+                decoration: new BoxDecoration(
+                  boxShadow: [
+                    new BoxShadow(
+                        blurRadius: .5,
+                        spreadRadius: 1.0,
+                        color: Colors.black.withOpacity(.12))
+                  ],
+                  color: bg,
+                  borderRadius: radius,
+                ),
+                child: new Stack(
+                  children: <Widget>[
+                    new Padding(
+                      padding: new EdgeInsets.only(right: 3.0),
+                      child: new Column(
+                        crossAxisAlignment: align,
+                        children: <Widget>[
+                          new Text(
+                            message,
+                            softWrap: true,
+                          ),
+                          new Text(
+                            senderName,
+                            style: new TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13.0,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              new Row(
+                crossAxisAlignment: align,
+                mainAxisAlignment: mainAxisAlignment,
+                children: <Widget>[
+                  new Text(time,
+                      style: new TextStyle(
+                        color: Colors.black38,
+                        fontSize: 10.0,
+                      )),
+                  new Icon(
+                    icon,
+                    size: 12.0,
+                    color: Colors.black38,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  Widget _currentUserBubble() {
+    final bg = Constants
+        .augmentalColor; //Colors.lightBlue.shade100; //Colors.greenAccent.shade100;
+    final textColor = Colors.white;
+    final align = CrossAxisAlignment.end;
+    final mainAxisAlignment = MainAxisAlignment.end;
+
+    final radius = new BorderRadius.only(
+      topLeft: new Radius.circular(30.0),
+      bottomLeft: new Radius.circular(30.0),
+      bottomRight: new Radius.circular(30.0),
+    );
+
+    return new Row(
+      crossAxisAlignment: align,
+      mainAxisAlignment: mainAxisAlignment,
+      children: <Widget>[
+        new Expanded(
+          child: new Column(
+            crossAxisAlignment: align,
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(8.0),
+                decoration: new BoxDecoration(
+                  boxShadow: [
+                    new BoxShadow(
+                        blurRadius: .5,
+                        spreadRadius: 1.0,
+                        color: Colors.black.withOpacity(.12))
+                  ],
+                  color: bg,
+                  borderRadius: radius,
+                ),
+                child: new Stack(
+                  children: <Widget>[
+                    new Padding(
+                      padding: new EdgeInsets.only(right: 3.0),
+                      child: new Column(
+                        crossAxisAlignment: align,
+                        children: <Widget>[
+                          new Text(
+                            message,
+                            softWrap: true,
+                            style: new TextStyle(
+                              color: textColor
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              new Row(
+                crossAxisAlignment: align,
+                mainAxisAlignment: mainAxisAlignment,
+                children: <Widget>[
+                  new Text(time,
+                      style: new TextStyle(
+                        color: Colors.black38,
+                        fontSize: 10.0,
+                      )),
+                  new Icon(
+                    icon,
+                    size: 12.0,
+                    color: Colors.black38,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isCurrentUser) {
+      return _currentUserBubble();
+    } else {
+      return _otherUserBubble();
+    }
   }
 }
