@@ -24,9 +24,9 @@ class Router{
     Navigator.of(cxt).pushReplacementNamed(path);
   }
 
-  void pushChatScreen(BuildContext cxt, String chatReference){
+  void pushChatScreen(BuildContext cxt, String chatReference, String chatName){
     MaterialPageRoute chat =  new MaterialPageRoute(
-        builder: (cxt) => new ChatScreen(chatReference: chatReference)
+        builder: (cxt) => new ChatScreen(chatReference: chatReference, chatName: chatName,)
     );
     Navigator.push(cxt, chat);
   }

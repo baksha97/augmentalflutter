@@ -10,9 +10,10 @@ class Bubble extends StatelessWidget {
         time = snapshot.data['timestamp'] ?? '', //snapshot.data['text']
         senderName = snapshot.data['senderName'],
         senderPhotoUrl = snapshot.data['senderPhotoUrl'],
-        isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']);
+        isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']),
+        imageUrl = snapshot.data['imageUrl'];
 
-  final String message, time, senderName, senderPhotoUrl;
+  final String message, time, senderName, senderPhotoUrl, imageUrl;
   final isCurrentUser;
   final icon = Icons.done_all;
 
@@ -35,7 +36,6 @@ class Bubble extends StatelessWidget {
           margin: const EdgeInsets.only(right: 5.0),
           child: new CircleAvatar(
             backgroundImage: new NetworkImage(senderPhotoUrl),
-            // radius: 10.0,
           ),
         ),
         new Expanded(
@@ -62,9 +62,19 @@ class Bubble extends StatelessWidget {
                       child: new Column(
                         crossAxisAlignment: align,
                         children: <Widget>[
-                          new Text(
-                            message,
-                            softWrap: true,
+                          new Container(
+                            child: imageUrl != null
+                                //TODO: Add EdgeInsets to image inside of bubble.
+                                ? new Container(
+                                    child: new Image.network(
+                                      imageUrl,
+                                      width: 250.0,
+                                    ),
+                                  )
+                                : new Text(
+                                    message,
+                                    softWrap: true,
+                                  ),
                           ),
                           new Text(
                             senderName,
@@ -83,11 +93,13 @@ class Bubble extends StatelessWidget {
                 crossAxisAlignment: align,
                 mainAxisAlignment: mainAxisAlignment,
                 children: <Widget>[
-                  new Text(time,
-                      style: new TextStyle(
-                        color: Colors.black38,
-                        fontSize: 10.0,
-                      )),
+                  new Text(
+                    time,
+                    style: new TextStyle(
+                      color: Colors.black38,
+                      fontSize: 10.0,
+                    ),
+                  ),
                   new Icon(
                     icon,
                     size: 12.0,
@@ -103,8 +115,7 @@ class Bubble extends StatelessWidget {
   }
 
   Widget _currentUserBubble() {
-    final bg = Constants
-        .augmentalColor; //Colors.lightBlue.shade100; //Colors.greenAccent.shade100;
+    final bg = Constants.augmentalColor;
     final textColor = Colors.white;
     final align = CrossAxisAlignment.end;
     final mainAxisAlignment = MainAxisAlignment.end;
@@ -129,9 +140,10 @@ class Bubble extends StatelessWidget {
                 decoration: new BoxDecoration(
                   boxShadow: [
                     new BoxShadow(
-                        blurRadius: .5,
-                        spreadRadius: 1.0,
-                        color: Colors.black.withOpacity(.12))
+                      blurRadius: .5,
+                      spreadRadius: 1.0,
+                      color: Colors.black.withOpacity(.12),
+                    )
                   ],
                   color: bg,
                   borderRadius: radius,
@@ -143,12 +155,20 @@ class Bubble extends StatelessWidget {
                       child: new Column(
                         crossAxisAlignment: align,
                         children: <Widget>[
-                          new Text(
-                            message,
-                            softWrap: true,
-                            style: new TextStyle(
-                              color: textColor
-                            ),
+                          new Container(
+                            child: imageUrl != null
+                                //TODO: Add EdgeInsets to image inside of bubble.
+                                ? new Container(
+                                    child: new Image.network(
+                                      imageUrl,
+                                      width: 250.0,
+                                    ),
+                                  )
+                                : new Text(
+                                    message,
+                                    softWrap: true,
+                                    style: new TextStyle(color: textColor),
+                                  ),
                           ),
                         ],
                       ),
@@ -160,11 +180,13 @@ class Bubble extends StatelessWidget {
                 crossAxisAlignment: align,
                 mainAxisAlignment: mainAxisAlignment,
                 children: <Widget>[
-                  new Text(time,
-                      style: new TextStyle(
-                        color: Colors.black38,
-                        fontSize: 10.0,
-                      )),
+                  new Text(
+                    time,
+                    style: new TextStyle(
+                      color: Colors.black38,
+                      fontSize: 10.0,
+                    ),
+                  ),
                   new Icon(
                     icon,
                     size: 12.0,
@@ -179,6 +201,8 @@ class Bubble extends StatelessWidget {
     );
   }
 
+  //TODO: add image catching for faster image loading.
+  //TODO: add indicator for when NetworkImages are being rendered.
   @override
   Widget build(BuildContext context) {
     if (isCurrentUser) {

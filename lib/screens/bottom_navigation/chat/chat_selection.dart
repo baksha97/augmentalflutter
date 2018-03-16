@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/bubble.dart';
 import 'package:augmentalflutter/routes.dart';
-import 'package:augmentalflutter/services/firebase/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';         //new
-import 'package:firebase_database/ui/firebase_animated_list.dart'; //new
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:math';
 
 class ChatSelection extends StatefulWidget {
   static const String route = '/screens/bottom_navigation/chat_selection';
@@ -21,13 +24,13 @@ class ChatSelection extends StatefulWidget {
   ChatSelectionState createState() => new ChatSelectionState();
 }
 
-
 class ChatSelectionState extends State<ChatSelection> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Flutter Chat"),
+        title: new Text("Scene Discussion Chat"),
+        backgroundColor: Constants.augmentalColor,
       ),
       body: new Container(
         child: new Column(
@@ -41,12 +44,17 @@ class ChatSelectionState extends State<ChatSelection> {
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
                         title: new Text(document['name']),
-                        onTap: (){
-                          //appRouter.push(context, ChatScreen.route);
-                          appRouter.pushChatScreen(context, document.documentID);
+                        onTap: () {
+                          appRouter.pushChatScreen(
+                            context,
+                            document.documentID,
+                            document['name'],
+                          );
                           print('tapped');
                         },
-                        subtitle: new Text(document['senderName'] +': '+ document['last-message']),
+                        subtitle: new Text(document['senderName'] +
+                            ': ' +
+                            document['last-message']),
                       );
                     }).toList(),
                   );
@@ -55,142 +63,122 @@ class ChatSelectionState extends State<ChatSelection> {
             ),
           ],
         ),
-       ),
-      );
-    }
+      ),
+    );
+  }
 }
 
 class ChatScreen extends StatefulWidget {
+  ChatScreen({@required final chatReference, @required final chatName})
+      : _messRef = Firestore.instance
+            .collection('chats/$chatReference/messages'), //chatReference,
+        _chatRef = Firestore.instance.document('chats/$chatReference'),
+        _chatName = chatName; //chatReference;
 
-  ChatScreen({
-    @required final chatReference
-  }): _messRef = Firestore.instance.collection('chats/$chatReference/messages'),//chatReference,
-      _chatRef = Firestore.instance.document('chats/$chatReference');//chatReference;
-
-
+  final _chatName;
   final _messRef;
   final _chatRef;
 
- // static const String route = '/screens/bottom_navigation/chat_screen';
+  // static const String route = '/screens/bottom_navigation/chat_screen';
   @override
   State createState() => new ChatScreenState();
 }
 
 class ChatScreenState extends State<ChatScreen> {
-
   final TextEditingController _textController = new TextEditingController();
   bool _isTyping = false;
   GoogleSignIn googleSignIn = new GoogleSignIn();
-  //final analytics = new FirebaseAnalytics();
+  final analytics = new FirebaseAnalytics();
   final auth = FirebaseAuth.instance;
 
   var formatter = new DateFormat.yMd().add_jm();
- // String formatted = formatter.format(new DateTime.now());
-
-  ScrollController _scrollController;
-  @override                                                           // NEW
-  void initState() {                                                  // NEW
-    super.initState();                                                // NEW
-    _scrollController = new ScrollController(                         // NEW
-      initialScrollOffset: 0.0,                                       // NEW
-      keepScrollOffset: true,                                         // NEW
-    );
-
-  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Flutter Chat"),
+        title: new Text(widget._chatName),
+        backgroundColor: Constants.augmentalColor,
       ),
       body: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Flexible(
-                  child:
-
-                  new StreamBuilder(
-                    stream: widget._messRef.snapshots,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return new Text('Loading...');
-                      return new ListView(
-                        reverse: false,
-                        shrinkWrap: true,
-                        children: snapshot.data.documents.map((document) {
-                        //  return
-                         // return new Bubble(snapshot: document, displayName: googleSignIn.currentUser.displayName,);
-                          return new ListTile(
-                            title:
-                              new Bubble(snapshot: document),
-                            onTap: (){},
-                            //subtitle: new Text(document['senderName']),
-                          );
-                        }).toList(),
+        child: new Column(
+          children: <Widget>[
+            new Flexible(
+              child: new StreamBuilder(
+                stream: widget._messRef.snapshots,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return new Text('Loading...');
+                  return new ListView(
+                    reverse: false,
+                    shrinkWrap: true,
+                    children: snapshot.data.documents.map((document) {
+                      return new ListTile(
+                        title: new Bubble(snapshot: document),
+                        onTap: () {},
                       );
-                    },
-                  ),
-                ),
-
-              new Divider(height: 1.0),
-              new Container(
-                decoration: new BoxDecoration(
-                    color: Theme.of(context).cardColor),
-                child: _buildTestComposer(),
+                    }).toList(),
+                  );
+                },
               ),
-            ],
-          ),
-          decoration: Theme.of(context).platform == TargetPlatform.iOS ? new BoxDecoration(border: new Border(top: new BorderSide(color: Colors.grey[200]))) : null),//new
+            ),
+            new Divider(height: 1.0),
+            new Container(
+              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+              child: _buildTestComposer(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildTestComposer() {
     return new IconTheme(
-        data: new IconThemeData(color: Theme.of(context).accentColor),
-        child: new Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: new Row(
-              children: <Widget>[
-//                new Container(
-//                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
-//                  child: new IconButton(
-//                      icon: new Icon(Icons.photo_camera),
-//                      onPressed: () async {
-//                        await _ensureLoggedIn();
-//                        File image = await ImagePicker.pickImage();
-//                        int r = new Random().nextInt(100000);
-//                        StorageReference ref = FirebaseStorage.instance.ref().child("image_$r.jpg");
-//                        StorageUploadTask upload = ref.put(image);
-//                        Uri  downloadUrl = (await upload.future).downloadUrl;
-//                        _sendMessage(imageUrl: downloadUrl.toString());
-//                      }
-//                  ),
-//                ),
-                new Flexible(
-                  child: new TextField(
-                    controller: _textController,
-                    onChanged: (String text) {
-                      setState(() {
-                        _isTyping = true;
-                      });
-                    },
-                    onSubmitted: _handleSubmitted,
-                    decoration: new InputDecoration.collapsed(hintText: "Enter a message"),
-                  ),
-                ),
+      data: new IconThemeData(color: Theme.of(context).accentColor),
+      child: new Container(
+        margin: const EdgeInsets.symmetric(horizontal: 0.0),
+        child: new Row(
+          children: <Widget>[
                 new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: new IconButton(
-                    icon: new Icon(Icons.send),
-                    onPressed: _isTyping ?
-                        () => _handleSubmitted(_textController.text) :
-                    null,
+                      icon: new Icon(Icons.photo_camera),
+                      onPressed: () async {
+                        await _ensureLoggedIn();
+                        File image = await ImagePicker.pickImage();
+                        int r = new Random().nextInt(100000);
+                        StorageReference ref = FirebaseStorage.instance.ref().child("image_$r.jpg");
+                        StorageUploadTask upload = ref.put(image);
+                        Uri  downloadUrl = (await upload.future).downloadUrl;
+                        _sendMessage(imageUrl: downloadUrl.toString());
+                      }
                   ),
                 ),
-
-              ]
-          ),
-        )
+            new Flexible(
+              child: new TextField(
+                controller: _textController,
+                onChanged: (String text) {
+                  setState(() {
+                    _isTyping = true;
+                  });
+                },
+                onSubmitted: _handleSubmitted,
+                decoration:
+                    new InputDecoration.collapsed(hintText: "Enter a message"),
+              ),
+            ),
+            new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: new IconButton(
+                icon: new Icon(Icons.send),
+                onPressed: _isTyping
+                    ? () => _handleSubmitted(_textController.text)
+                    : null,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -200,86 +188,37 @@ class ChatScreenState extends State<ChatScreen> {
       _isTyping = false;
     });
     await _ensureLoggedIn();
-    _sendMessage(text:text);
+    _sendMessage(text: text);
   }
 
-  void _sendMessage({ String text, String imageUrl}) {
+  void _sendMessage({String text, String imageUrl}) {
     widget._messRef.document().setData({
       'text': text,
       'imageUrl': imageUrl,
       'senderName': googleSignIn.currentUser.displayName,
       'senderPhotoUrl': googleSignIn.currentUser.photoUrl,
-      'timestamp' : formatter.format(new DateTime.now()),
+      'timestamp': formatter.format(new DateTime.now()),
     });
 
     widget._chatRef.updateData({
       'senderName': googleSignIn.currentUser.displayName,
-      'last-message': text,
+      'last-message': text ?? 'Image',
     });
-   //analytics.logEvent(name: 'send_message');
+    //analytics.logEvent(name: 'send_message');
   }
 
   Future<Null> _ensureLoggedIn() async {
     GoogleSignInAccount user = googleSignIn.currentUser;
-    if (user == null)
-      user = await googleSignIn.signInSilently();
+    if (user == null) user = await googleSignIn.signInSilently();
     if (user == null) {
       await googleSignIn.signIn();
       //analytics.logLogin();
     }
     if (auth.currentUser == null) {
-      GoogleSignInAuthentication credentials = await googleSignIn.currentUser.authentication;
-      await auth.signInWithGoogle(idToken: credentials.idToken, accessToken: credentials.accessToken);
+      GoogleSignInAuthentication credentials =
+          await googleSignIn.currentUser.authentication;
+      await auth.signInWithGoogle(
+          idToken: credentials.idToken, accessToken: credentials.accessToken);
     }
   }
-
 }
-
-//class ChatMessage extends StatelessWidget {
-//  ChatMessage({this.snapshot,}); //this.animation});
-//  final DocumentSnapshot snapshot;
-////  final Animation animation;
-//  @override
-//  Widget build(BuildContext context) {
-//    return new Container(
-//      //new SizeTransition(
-////        sizeFactor: new CurvedAnimation(
-////            parent: animation,
-////            curve: Curves.easeOut
-////        ),
-//        //axisAlignment: 0.0,
-//        child: new Container(
-//          margin: const EdgeInsets.symmetric(vertical: 10.0),
-//          child: new Row(
-//            crossAxisAlignment: CrossAxisAlignment.start,
-//            children: <Widget>[
-//
-//              new Container(
-//                margin: const EdgeInsets.only(right: 16.0),
-//                child: new CircleAvatar(
-//                    backgroundImage: new NetworkImage(snapshot.data['senderPhotoUrl']),
-//                   // radius: 10.0,
-//                )
-//              ),
-//
-//              new Column(
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                children: <Widget>[
-//                  new Text(snapshot.data['senderName'], style: Theme.of(context).textTheme.subhead),
-//                  new Container(
-//                    margin: const EdgeInsets.only(top: 5.0),
-//                    child: snapshot.data['imageUrl'] != null ?
-//                    new Image.network(
-//                      snapshot.data['imageUrl'],
-//                      width: 250.0,
-//                    ) : new Text(snapshot.data['text'], softWrap: true,),
-//                  ),
-//                ],
-//              ),
-//            ],
-//          ),
-//        )
-//    );
-//  }
-//}
-//
