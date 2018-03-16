@@ -109,14 +109,14 @@ class ChatScreenState extends State<ChatScreen> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) return new CircularProgressIndicator();
                   return new ListView(
-                    reverse: false,
+                    reverse: true,
                     //shrinkWrap: true,
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
                         title: new Bubble(snapshot: document),
                         onTap: () {},
                       );
-                    }).toList(),
+                    }).toList().reversed.toList(),
                   );
                 },
               ),
