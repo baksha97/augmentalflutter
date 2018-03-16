@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class Bubble extends StatelessWidget {
   Bubble({@required DocumentSnapshot snapshot})
       : message = snapshot.data['text'],
-        time = snapshot.data['timestamp'], //snapshot.data['text']
+        time = snapshot.data['timestamp'] ?? '', //snapshot.data['text']
         senderName = snapshot.data['senderName'],
         senderPhotoUrl = snapshot.data['senderPhotoUrl'],
         isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']),
@@ -122,8 +122,9 @@ class Bubble extends StatelessWidget {
 
     final radius = new BorderRadius.only(
       topLeft: new Radius.circular(30.0),
+      topRight: new Radius.circular(30.0),
       bottomLeft: new Radius.circular(30.0),
-      bottomRight: new Radius.circular(30.0),
+     // bottomRight: new Radius.circular(0.0),
     );
 
     return new Row(

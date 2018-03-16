@@ -52,9 +52,9 @@ class ChatSelectionState extends State<ChatSelection> {
                           );
                           print('tapped');
                         },
-                        subtitle: new Text(document['senderName'] +
-                            ': ' +
-                            document['last-message']),
+                        subtitle: new Text(
+                            document['last-message'],
+                        ),
                       );
                     }).toList(),
                   );
