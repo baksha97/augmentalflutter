@@ -107,10 +107,10 @@ class ChatScreenState extends State<ChatScreen> {
               child: new StreamBuilder(
                 stream: widget._messRef.snapshots,
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) return new Text('Loading...');
+                  if (!snapshot.hasData) return new CircularProgressIndicator();
                   return new ListView(
                     reverse: false,
-                    shrinkWrap: true,
+                    //shrinkWrap: true,
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
                         title: new Bubble(snapshot: document),
@@ -139,21 +139,21 @@ class ChatScreenState extends State<ChatScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 0.0),
         child: new Row(
           children: <Widget>[
-                new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new IconButton(
-                      icon: new Icon(Icons.photo_camera),
-                      onPressed: () async {
-                        await _ensureLoggedIn();
-                        File image = await ImagePicker.pickImage();
-                        int r = new Random().nextInt(100000);
-                        StorageReference ref = FirebaseStorage.instance.ref().child("image_$r.jpg");
-                        StorageUploadTask upload = ref.put(image);
-                        Uri  downloadUrl = (await upload.future).downloadUrl;
-                        _sendMessage(imageUrl: downloadUrl.toString());
-                      }
-                  ),
-                ),
+            new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: new IconButton(
+                  icon: new Icon(Icons.photo_camera),
+                  onPressed: () async {
+                    await _ensureLoggedIn();
+                    File image = await ImagePicker.pickImage();
+                    int r = new Random().nextInt(100000);
+                    StorageReference ref =
+                        FirebaseStorage.instance.ref().child("image_$r.jpg");
+                    StorageUploadTask upload = ref.put(image);
+                    Uri downloadUrl = (await upload.future).downloadUrl;
+                    _sendMessage(imageUrl: downloadUrl.toString());
+                  }),
+            ),
             new Flexible(
               child: new TextField(
                 controller: _textController,

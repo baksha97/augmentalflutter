@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class Bubble extends StatelessWidget {
   Bubble({@required DocumentSnapshot snapshot})
       : message = snapshot.data['text'],
-        time = snapshot.data['timestamp'] ?? '', //snapshot.data['text']
+        time = snapshot.data['timestamp'], //snapshot.data['text']
         senderName = snapshot.data['senderName'],
         senderPhotoUrl = snapshot.data['senderPhotoUrl'],
         isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']),
