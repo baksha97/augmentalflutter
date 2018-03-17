@@ -47,8 +47,9 @@ class ChatSelectionState extends State<ChatSelection> {
                   return new ListView(
                     children: snapshot.data.documents.map((document) {
                       return new ListTile(
-                        title:
-                          new ChatCard(snapshot: document,),
+                        title: new ChatCard(
+                          snapshot: document,
+                        ),
                       );
                     }).toList(),
                   );
@@ -88,7 +89,6 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget._chatName),

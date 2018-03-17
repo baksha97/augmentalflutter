@@ -10,17 +10,18 @@ class ChatCard extends StatelessWidget {
       : name = snapshot.data['name'],
         subtitle = snapshot.data['subtitle'] ?? 'Subtitle null',
         description = snapshot.data['description'] ?? 'Description null',
-        imageUrl = snapshot.data['imageUrl'] ?? 'https://developers.giphy.com/static/img/api.c99e353f761d.gif',
+        imageUrl = snapshot.data['imageUrl'] ??
+            'https://developers.giphy.com/static/img/api.c99e353f761d.gif',
         documentID = snapshot.documentID;
 
   final String name, subtitle, description, imageUrl, documentID;
 
-  static const double height = 366.0;
+  static const double height = 450.0;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final TextStyle titleStyle =
-    theme.textTheme.headline.copyWith(color: Colors.white);
+        theme.textTheme.headline.copyWith(color: Colors.white);
     final TextStyle descriptionStyle = theme.textTheme.subhead;
 
     return new SafeArea(
@@ -30,6 +31,7 @@ class ChatCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         height: height,
         child: new Card(
+          color: Colors.grey.shade50,
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -41,8 +43,7 @@ class ChatCard extends StatelessWidget {
                     new Positioned.fill(
                       child: new CachedNetworkImage(
                         imageUrl: imageUrl,
-                        placeholder:
-                        new CircularProgressIndicator(),
+                        placeholder: new CircularProgressIndicator(),
                         errorWidget: new Icon(Icons.error),
                       ),
                     ),
@@ -79,12 +80,19 @@ class ChatCard extends StatelessWidget {
                           child: new Text(
                             subtitle,
                             style: descriptionStyle.copyWith(
-                              color: Colors.black54,
+                              color: Colors.black,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
                         new Container(
-                          height: 60.0,
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: new BoxDecoration(
+                            color: Colors.white,
+                            //border:
+                                //new Border.all(color: Constants.augmentalColor),
+                          ),
+                          height: 147.0,
                           child: new SingleChildScrollView(
                             child: new Text(
                               description,
@@ -105,15 +113,19 @@ class ChatCard extends StatelessWidget {
                   alignment: MainAxisAlignment.end,
                   children: <Widget>[
                     new FlatButton(
-                      child: const Text('CHAT'),
+                      child: const Text(
+                        'CHAT',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       textColor: Constants.augmentalColor,
                       onPressed: () {
                         appRouter.pushChatScreen(
                           context,
-                          documentID, name
-                          ,
+                          documentID,
+                          name,
                         );
-                        print('tapped');
                       },
                     ),
                   ],
@@ -125,5 +137,4 @@ class ChatCard extends StatelessWidget {
       ),
     );
   }
-
 }
