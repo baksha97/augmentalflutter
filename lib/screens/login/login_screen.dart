@@ -8,22 +8,37 @@ import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-
   static const String route = '/login';
 
   @override
   State<StatefulWidget> createState() => new LoginScreenState();
-
 }
 
-class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
+class LoginScreenState extends State<LoginScreen> {
+  //, AuthStateListener {
   BuildContext _ctx;
 
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
   void _submit() async {
+    scaffoldKey.currentState.showSnackBar(
+      new SnackBar(
+        backgroundColor: Colors.white,
+        duration: new Duration(seconds: 4),
+        content: new Row(
+          children: <Widget>[
+            new CircularProgressIndicator(),
+            new Text(
+              "  Signing-In...",
+              style: const TextStyle(
+                color: Constants.augmentalColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     await UserAuth.ensureLoggedIn();
     appRouter.pushReplacementTo(_ctx, BottomNavigation.route);
   }
@@ -41,7 +56,6 @@ class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
 //   }
 //  }
 
-
   @override
   Widget build(BuildContext context) {
     //set context
@@ -52,25 +66,24 @@ class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
         width: 85.0,
         height: 29.0,
       ),
-        new Image.asset(
-          'assets/augmental_logo.jpg',
-          width: 300.0,
-          height: 300.0,
-        ),
-        new RaisedButton(
-          onPressed: _submit,
-          child: new Text("Sign in with Google"),
-          color: Constants.augmentalColor,
-          textColor: Colors.white,
-        ),
-      ];
+      new Image.asset(
+        'assets/augmental_logo.jpg',
+        width: 300.0,
+        height: 300.0,
+      ),
+      new RaisedButton(
+        onPressed: _submit,
+        child: new Text("Enter Augmental"),
+        color: Constants.augmentalColor,
+        textColor: Colors.white,
+      ),
+    ];
 
     return new Scaffold(
       appBar: null,
       key: scaffoldKey,
-      backgroundColor: Constants.augmentalColor,
-      body:
-      new Center(
+      // backgroundColor: Constants.augmentalColor,
+      body: new Center(
         child: new ClipRect(
           child: new BackdropFilter(
             filter: new ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -80,13 +93,11 @@ class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
               decoration: new BoxDecoration(
                 border: new Border.all(width: 1.0, color: Colors.white),
                 borderRadius:
-                const BorderRadius.all(const Radius.circular(8.0)),
+                    const BorderRadius.all(const Radius.circular(8.0)),
                 color: Colors.white,
               ),
               child: new Center(
-                child: new Column(
-                  children: boxContents
-                ),
+                child: new Column(children: boxContents),
               ),
             ),
           ),

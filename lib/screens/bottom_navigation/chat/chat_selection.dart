@@ -6,15 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/bubble.dart';
-import 'package:augmentalflutter/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math';
@@ -83,7 +78,6 @@ class ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = new TextEditingController();
   bool _isTyping = false;
   final analytics = new FirebaseAnalytics();
-  final auth = FirebaseAuth.instance;
   var formatter = new DateFormat.yMd().add_jm();
 
   @override
