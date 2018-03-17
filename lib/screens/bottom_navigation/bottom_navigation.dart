@@ -87,7 +87,6 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
     });
   }
 
-  //Todo: Delete
   Widget _buildTransitionsStack() {
     final List<FadeTransition> transitions = <FadeTransition>[];
 

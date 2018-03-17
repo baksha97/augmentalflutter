@@ -12,10 +12,8 @@ class LoginScreen extends StatefulWidget {
   static const String route = '/login';
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return new LoginScreenState();
-  }
+  State<StatefulWidget> createState() => new LoginScreenState();
+
 }
 
 class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
@@ -24,9 +22,6 @@ class LoginScreenState extends State<LoginScreen>{//, AuthStateListener {
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
-  LoginScreenState() {
-  }
 
   void _submit() async {
     await UserAuth.ensureLoggedIn();

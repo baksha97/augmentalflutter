@@ -8,7 +8,8 @@ class NavigationIconView {
     Color color,
     Widget view,
     TickerProvider vsync,
-  }) : _icon = icon,
+  })
+      : _icon = icon,
         _color = color,
         _title = title,
         _view = view,
@@ -21,11 +22,11 @@ class NavigationIconView {
           duration: kThemeAnimationDuration,
           vsync: vsync,
         ) {
-            _animation = new CurvedAnimation(
-              parent: controller,
-              curve: const Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
-            );
-          }
+    _animation = new CurvedAnimation(
+      parent: controller,
+      curve: const Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+    );
+  }
 
   final Widget _icon;
   final Color _color;
@@ -35,7 +36,8 @@ class NavigationIconView {
   final AnimationController controller;
   CurvedAnimation _animation;
 
-  FadeTransition transition(BottomNavigationBarType type, BuildContext context) {
+  FadeTransition transition(
+      BottomNavigationBarType type, BuildContext context) {
     Color iconColor;
     if (type == BottomNavigationBarType.shifting) {
       iconColor = _color;
@@ -46,35 +48,27 @@ class NavigationIconView {
           : themeData.accentColor;
     }
 
-
-
     return new FadeTransition(
       opacity: _animation,
       child: new SlideTransition(
         position: new Tween<Offset>(
           begin: const Offset(0.0, 0.02), // Slightly down.
           end: Offset.zero,
-        ).animate(_animation),
-
-
-        //TODO: PERSONALIZE VIEW IN HERE.
-        ////
+        )
+            .animate(_animation),
         child: _view ??
-         new Center(
-           child:
-            new IconTheme(
-            data: new IconThemeData(
-              color: _color,
-              size: 120.0,
+            new Center(
+              child: new IconTheme(
+                data: new IconThemeData(
+                  color: _color,
+                  size: 120.0,
+                ),
+                child: new Semantics(
+                  label: 'Placeholder for $_title tab',
+                  child: _icon,
+                ),
+              ),
             ),
-            child: new Semantics(
-              label: 'Placeholder for $_title tab',
-              child: _icon,
-            ),
-          ),
-         ),
-       ///
-
       ),
     );
   }

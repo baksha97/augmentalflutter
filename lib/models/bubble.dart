@@ -17,6 +17,8 @@ class Bubble extends StatelessWidget {
   final String message, time, senderName, senderPhotoUrl, imageUrl;
   final isCurrentUser;
   final icon = Icons.done_all;
+  final bubbleImageInsets = const EdgeInsets.all(8.0);
+  final bubbleImageHeightAndWidth = 300.0;
 
   Widget _otherUserBubble() {
     final bg = Colors.grey.shade100;
@@ -65,13 +67,19 @@ class Bubble extends StatelessWidget {
                         children: <Widget>[
                           new Container(
                             child: imageUrl != null
-                                //TODO: Add EdgeInsets to image inside of bubble.
+                                //TODO: Add Circle Progress to image inside of bubble while still using an ImageProvider.
                                 ? new Container(
-                                    child: new CachedNetworkImage(
-                                      imageUrl: imageUrl,
-                                      placeholder:
-                                          new CircularProgressIndicator(),
-                                      errorWidget: new Icon(Icons.error),
+                                    height: bubbleImageHeightAndWidth,
+                                    width: bubbleImageHeightAndWidth,
+                                    margin: bubbleImageInsets,
+                                    decoration: new BoxDecoration(
+                                      borderRadius: radius,
+                                      image: new DecorationImage(
+                                        image: new CachedNetworkImageProvider(
+                                          imageUrl,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   )
                                 : new Text(
@@ -103,11 +111,6 @@ class Bubble extends StatelessWidget {
                       fontSize: 10.0,
                     ),
                   ),
-                  new Icon(
-                    icon,
-                    size: 12.0,
-                    color: Colors.black38,
-                  ),
                 ],
               ),
             ],
@@ -127,7 +130,6 @@ class Bubble extends StatelessWidget {
       topLeft: new Radius.circular(30.0),
       topRight: new Radius.circular(30.0),
       bottomLeft: new Radius.circular(30.0),
-      // bottomRight: new Radius.circular(0.0),
     );
 
     return new Row(
@@ -161,13 +163,19 @@ class Bubble extends StatelessWidget {
                         children: <Widget>[
                           new Container(
                             child: imageUrl != null
-                                //TODO: Add EdgeInsets to image inside of bubble.
+                                //TODO: Add Circle Progress to image inside of bubble while still using an ImageProvider.
                                 ? new Container(
-                                    child: new CachedNetworkImage(
-                                      imageUrl: imageUrl,
-                                      placeholder:
-                                          new CircularProgressIndicator(),
-                                      errorWidget: new Icon(Icons.error),
+                                    height: bubbleImageHeightAndWidth,
+                                    width: bubbleImageHeightAndWidth,
+                                    margin: bubbleImageInsets,
+                                    decoration: new BoxDecoration(
+                                      borderRadius: radius,
+                                      image: new DecorationImage(
+                                        image: new CachedNetworkImageProvider(
+                                          imageUrl,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   )
                                 : new Text(
@@ -207,7 +215,6 @@ class Bubble extends StatelessWidget {
     );
   }
 
-  //TODO: add image catching for faster image loading.
   @override
   Widget build(BuildContext context) {
     if (isCurrentUser) {
