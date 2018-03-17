@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+//TODO: REMOVE NULL URL AFTER DEVELOPMENT
+
 class ChatCard extends StatelessWidget {
   ChatCard({@required DocumentSnapshot snapshot})
       : name = snapshot.data['name'],
