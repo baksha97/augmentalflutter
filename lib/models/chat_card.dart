@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 
 class ChatCard extends StatelessWidget {
   ChatCard({@required DocumentSnapshot snapshot})
-      : name = snapshot.data['name'],
-        subtitle = snapshot.data['subtitle'] ?? 'Subtitle null',
-        description = snapshot.data['description'] ?? 'Description null',
+      : name = snapshot.data['name'] ?? 'Stay tuned...',
+        subtitle = snapshot.data['subtitle'] ?? 'Subtitle',
+        description = snapshot.data['description'] ?? 'Description',
         imageUrl = snapshot.data['imageUrl'] ??
             'https://developers.giphy.com/static/img/api.c99e353f761d.gif',
         documentID = snapshot.documentID;
@@ -91,16 +91,12 @@ class ChatCard extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           decoration: new BoxDecoration(
                             color: Colors.white,
-                            //border:
-                                //new Border.all(color: Constants.augmentalColor),
                           ),
                           height: 147.0,
                           child: new SingleChildScrollView(
                             child: new Text(
                               description,
                               softWrap: true,
-                              // overflow: TextOverflow.ellipsis,
-                              // maxLines: 3,
                             ),
                           ),
                         ),

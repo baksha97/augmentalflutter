@@ -82,7 +82,6 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = new TextEditingController();
   bool _isTyping = false;
-  GoogleSignIn googleSignIn = new GoogleSignIn();
   final analytics = new FirebaseAnalytics();
   final auth = FirebaseAuth.instance;
   var formatter = new DateFormat.yMd().add_jm();
@@ -193,13 +192,13 @@ class ChatScreenState extends State<ChatScreen> {
     widget._messRef.document().setData({
       'text': text,
       'imageUrl': imageUrl,
-      'senderName': googleSignIn.currentUser.displayName,
-      'senderPhotoUrl': googleSignIn.currentUser.photoUrl,
+      'senderName': UserAuth.googleSignIn.currentUser.displayName,
+      'senderPhotoUrl': UserAuth.googleSignIn.currentUser.photoUrl,
       'timestamp': formatter.format(new DateTime.now()),
     });
 
     widget._chatRef.updateData({
-      'senderName': googleSignIn.currentUser.displayName,
+      'senderName': UserAuth.googleSignIn.currentUser.displayName,
       'last-message': text ?? 'Image',
     });
     analytics.logEvent(name: 'send_message');
