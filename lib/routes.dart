@@ -1,5 +1,7 @@
 import 'package:augmentalflutter/screens/bottom_navigation/bottom_navigation.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/friend.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/friend_details_page.dart';
 import 'package:augmentalflutter/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +32,13 @@ class Router{
     );
     Navigator.push(cxt, chat);
   }
+
+//  void pushFriendProfile(BuildContext cxt, Friend friend){
+//    MaterialPageRoute chat =  new MaterialPageRoute(
+//        builder: (cxt) => new FriendDetailsPage(friend)
+//    );
+//    Navigator.push(cxt, chat);
+//  }
 
 }
 

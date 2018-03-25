@@ -11,7 +11,7 @@ class Bubble extends StatelessWidget {
         time = snapshot.data['timestamp'] ?? '', //snapshot.data['text']
         senderName = snapshot.data['senderName'],
         senderPhotoUrl = snapshot.data['senderPhotoUrl'],
-        isCurrentUser = (UserAuth.displayName == snapshot.data['senderName']),
+        isCurrentUser = (UserAuth.email == snapshot.data['senderEmail']),
         imageUrl = snapshot.data['imageUrl'];
 
   final String message, time, senderName, senderPhotoUrl, imageUrl;

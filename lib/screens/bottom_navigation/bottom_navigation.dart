@@ -8,6 +8,8 @@ import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/friend_details_page.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/friend.dart';
 
 
 class BottomNavigation extends StatefulWidget {
@@ -63,6 +65,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: const Icon(Icons.person_outline),
         title: 'Profile',
+        view: new FriendDetailsPage(new Friend(avatar: UserAuth.googleSignIn.currentUser.photoUrl, name: UserAuth.displayName, email: UserAuth.googleSignIn.currentUser.email, location: "NY"), avatarTag: 'me'),
         color: barColor,
         vsync: this,
       ),
@@ -122,7 +125,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
           //TODO: REMOVE AFTER LOGOUT METHOD CREATED
-          if(_currentIndex == _navigationViews.length-1){
+          if(_currentIndex == _navigationViews.length-2){
             UserAuth.signOut();
           }
         });

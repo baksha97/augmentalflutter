@@ -39,6 +39,7 @@ flutter:
     - assets/test.gif
     - assets/unity_black.png
     - assets/unity_white.png
+    - assets/augmental_slogan.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

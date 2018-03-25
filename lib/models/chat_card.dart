@@ -55,7 +55,7 @@ class ChatCard extends StatelessWidget {
                       right: 16.0,
                       child: new FittedBox(
                         fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.bottomLeft,
                         child: new Text(
                           name,
                           style: titleStyle,
@@ -93,6 +93,7 @@ class ChatCard extends StatelessWidget {
                             color: Colors.white,
                           ),
                           height: 147.0,
+                          width: 300.0,
                           child: new SingleChildScrollView(
                             child: new Text(
                               description,

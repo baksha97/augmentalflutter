@@ -39,7 +39,7 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    await UserAuth.ensureLoggedIn();
+    await UserAuth.ensureLoggedIn(_ctx);
     appRouter.pushReplacementTo(_ctx, BottomNavigation.route);
   }
 
@@ -61,19 +61,33 @@ class LoginScreenState extends State<LoginScreen> {
     //set context
     _ctx = context;
     var boxContents = <Widget>[
-      new Image.asset(
-        'assets/augmental_name.png',
-        width: 85.0,
-        height: 29.0,
+      new Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: new Divider(color: Colors.black),
       ),
       new Image.asset(
         'assets/augmental_logo.jpg',
-        width: 300.0,
-        height: 300.0,
+        width: 200.0,
+        height: 200.0,
+      ),
+      new Image.asset(
+        'assets/augmental_name.png',
+        width: 200.0,
+        height: 100.0,
+      ),
+      //new Divider(color: Constants.augmentalColor),
+      new Image.asset(
+        'assets/augmental_slogan.png',
+        width: 180.0,
+        height: 60.0,
+      ),
+      new Padding(
+        padding: const EdgeInsets.only(top: 10.0, bottom: 40.0),
+        child: new Divider(color: Colors.black),
       ),
       new RaisedButton(
         onPressed: _submit,
-        child: new Text("Enter Augmental"),
+        child: new Text("Let's begin"),
         color: Constants.augmentalColor,
         textColor: Colors.white,
       ),
@@ -82,19 +96,23 @@ class LoginScreenState extends State<LoginScreen> {
     return new Scaffold(
       appBar: null,
       key: scaffoldKey,
-      // backgroundColor: Constants.augmentalColor,
-      body: new Center(
-        child: new ClipRect(
+      backgroundColor: Colors.white,
+      body:
+      new Center(
+        child:
+//        child: new Column(children: boxContents,),
+        new ClipRect(
           child: new BackdropFilter(
-            filter: new ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            filter: new ui.ImageFilter.blur(
+                sigmaX: 1.0, sigmaY: 1.0), //blur(sigmaX: 10.0, sigmaY: 10.0),
             child: new Container(
               width: 300.0,
-              height: 400.0,
+              height: 550.0,
               decoration: new BoxDecoration(
                 border: new Border.all(width: 1.0, color: Colors.white),
                 borderRadius:
                     const BorderRadius.all(const Radius.circular(8.0)),
-                color: Colors.white,
+                // color: Colors.white,
               ),
               child: new Center(
                 child: new Column(children: boxContents),

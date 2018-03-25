@@ -68,7 +68,6 @@ class ChatScreen extends StatefulWidget {
   final _chatName;
   final _messRef;
   final _chatRef;
-
   // static const String route = '/screens/bottom_navigation/chat_screen';
   @override
   State createState() => new ChatScreenState();
@@ -80,8 +79,12 @@ class ChatScreenState extends State<ChatScreen> {
   final analytics = new FirebaseAnalytics();
   var formatter = new DateFormat.yMd().add_jm();
 
+  BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget._chatName),
@@ -135,7 +138,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                    await UserAuth.ensureLoggedIn();
+                    await UserAuth.ensureLoggedIn(_context);
                     File image = await ImagePicker.pickImage();
                     int r = new Random().nextInt(100000);
                     StorageReference ref =
@@ -178,7 +181,7 @@ class ChatScreenState extends State<ChatScreen> {
     setState(() {
       _isTyping = false;
     });
-    await UserAuth.ensureLoggedIn();
+    await UserAuth.ensureLoggedIn(_context);
     _sendMessage(text: text);
   }
 
@@ -187,6 +190,7 @@ class ChatScreenState extends State<ChatScreen> {
       'text': text,
       'imageUrl': imageUrl,
       'senderName': UserAuth.googleSignIn.currentUser.displayName,
+      'senderEmail': UserAuth.googleSignIn.currentUser.email,
       'senderPhotoUrl': UserAuth.googleSignIn.currentUser.photoUrl,
       'timestamp': formatter.format(new DateTime.now()),
     });
