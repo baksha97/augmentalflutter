@@ -6,6 +6,7 @@ import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/unity/unity_screen.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/profile/friend_details_page.dart';
@@ -58,6 +59,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: new Icon(Assets.augmentalIconData),// Constants.icon,//const Icon(Icons.remove_red_eye),
         title: 'Unity',
+        view: new UnityChannel(),
         color: barColor,
         vsync: this,
       ),
@@ -124,10 +126,6 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
           _navigationViews[_currentIndex].controller.reverse();
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
-          //TODO: REMOVE AFTER LOGOUT METHOD CREATED
-          if(_currentIndex == _navigationViews.length-2){
-            UserAuth.signOut();
-          }
         });
       },
     );
