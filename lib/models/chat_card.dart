@@ -74,7 +74,7 @@ class ChatCard extends StatelessWidget {
                     //overflow: TextOverflow.ellipsis,
                     style: descriptionStyle,
                     child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         // three line description
                         new Padding(
@@ -93,7 +93,6 @@ class ChatCard extends StatelessWidget {
                             color: Colors.white,
                           ),
                           height: 147.0,
-                          width: 300.0,
                           child: new SingleChildScrollView(
                             child: new Text(
                               description,
