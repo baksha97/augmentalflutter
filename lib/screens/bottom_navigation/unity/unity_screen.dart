@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'package:augmentalflutter/assets.dart';
+import 'package:augmentalflutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,8 +22,7 @@ class _UnityChannelState extends State<UnityChannel> {
   Future<Null> _openUnity() async {
     String status;
     try {
-      final String result = await methodChannel.invokeMethod('openUnity');
-      status = result;
+      await methodChannel.invokeMethod('openUnity');
     } on PlatformException {
       status = 'We\'ve encountered an error opening Unity, sorry about that...';
     }
@@ -37,17 +38,29 @@ class _UnityChannelState extends State<UnityChannel> {
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Container(
+
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Unity Launcher'),
+        backgroundColor: Constants.augmentalColor,
+      ),
+      body: new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            new Text(_status, key: const Key('Status key')),
+            new Icon(
+              Assets.unityIconData,
+              size: 300.0,
+              color: Constants.augmentalColor,
+            ),
             new Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: new EdgeInsets.only(left: 40.0, right: 40.0),
               child: new RaisedButton(
-                child: const Text('Open Unity'),
                 onPressed: _openUnity,
+                color: Colors.white,
+                textColor: Colors.black,
+                child: new Text(_status),
               ),
             ),
           ],

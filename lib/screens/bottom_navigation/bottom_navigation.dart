@@ -57,7 +57,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       ),
 
       new NavigationIconView(
-        icon: new Icon(Assets.augmentalIconData),// Constants.icon,//const Icon(Icons.remove_red_eye),
+        icon: new Icon(Assets.unityIconData),// Constants.icon,//const Icon(Icons.remove_red_eye),
         title: 'Unity',
         view: new UnityChannel(),
         color: barColor,

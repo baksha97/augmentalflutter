@@ -99,9 +99,7 @@ class LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body:
       new Center(
-        child:
-//        child: new Column(children: boxContents,),
-        new ClipRect(
+        child: new ClipRect(
           child: new BackdropFilter(
             filter: new ui.ImageFilter.blur(
                 sigmaX: 1.0, sigmaY: 1.0), //blur(sigmaX: 10.0, sigmaY: 10.0),
