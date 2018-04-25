@@ -9,8 +9,8 @@ import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.d
 import 'package:augmentalflutter/screens/bottom_navigation/unity/unity_screen.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:augmentalflutter/screens/bottom_navigation/profile/friend_details_page.dart';
-import 'package:augmentalflutter/screens/bottom_navigation/profile/friend.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/profile_details_page.dart';
+import 'package:augmentalflutter/models/augmental_user.dart';
 
 
 class BottomNavigation extends StatefulWidget {
@@ -67,7 +67,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: const Icon(Icons.person_outline),
         title: 'Profile',
-        view: new FriendDetailsPage(new Friend(avatar: UserAuth.googleSignIn.currentUser.photoUrl, name: UserAuth.displayName, email: UserAuth.googleSignIn.currentUser.email, location: "NY"), avatarTag: 'me'),
+        view: new ProfileDetailsPage(new AugmentalUser(avatar: UserAuth.googleSignIn.currentUser.photoUrl, name: UserAuth.displayName, email: UserAuth.googleSignIn.currentUser.email, location: "NY"), avatarTag: 'me'),
         color: barColor,
         vsync: this,
       ),

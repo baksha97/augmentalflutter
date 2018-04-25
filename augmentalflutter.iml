@@ -9,6 +9,10 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.0/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.0/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.2/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/cloud_firestore-0.3.2/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_analytics-0.3.0/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_analytics-0.3.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_analytics-0.3.0/example/.pub" />
@@ -17,6 +21,10 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.0/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.0/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.3/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.3/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.3/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_auth-0.5.3/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_core-0.0.7/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_core-0.0.7/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_core-0.0.7/example/.pub" />
@@ -25,6 +33,10 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.0/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.0/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.1/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_database-0.4.1/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_storage-0.2.0/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_storage-0.2.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/firebase_storage-0.2.0/example/.pub" />
@@ -41,6 +53,14 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.0/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.0/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.0/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.1/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.3.1/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.4.0/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.4.0/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.4.0/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/image_picker-0.4.0/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/path_provider-0.3.1/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/path_provider-0.3.1/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/Pods/.symlinks/plugins/path_provider-0.3.1/example/.pub" />

@@ -131,13 +131,13 @@ PODS:
 DEPENDENCIES:
   - cloud_firestore (from `Pods/.symlinks/plugins/cloud_firestore-0.3.0/ios`)
   - firebase_analytics (from `Pods/.symlinks/plugins/firebase_analytics-0.3.0/ios`)
-  - firebase_auth (from `Pods/.symlinks/plugins/firebase_auth-0.5.0/ios`)
+  - firebase_auth (from `Pods/.symlinks/plugins/firebase_auth-0.5.3/ios`)
   - firebase_core (from `Pods/.symlinks/plugins/firebase_core-0.0.7/ios`)
-  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.0/ios`)
+  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.1/ios`)
   - firebase_storage (from `Pods/.symlinks/plugins/firebase_storage-0.2.0/ios`)
   - Flutter (from `Pods/.symlinks/flutter/ios`)
   - google_sign_in (from `Pods/.symlinks/plugins/google_sign_in-3.0.0/ios`)
-  - image_picker (from `Pods/.symlinks/plugins/image_picker-0.3.0/ios`)
+  - image_picker (from `Pods/.symlinks/plugins/image_picker-0.3.1/ios`)
   - path_provider (from `Pods/.symlinks/plugins/path_provider-0.3.1/ios`)
   - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.3.3/ios`)
 
@@ -147,11 +147,11 @@ EXTERNAL SOURCES:
   firebase_analytics:
     :path: Pods/.symlinks/plugins/firebase_analytics-0.3.0/ios
   firebase_auth:
-    :path: Pods/.symlinks/plugins/firebase_auth-0.5.0/ios
+    :path: Pods/.symlinks/plugins/firebase_auth-0.5.3/ios
   firebase_core:
     :path: Pods/.symlinks/plugins/firebase_core-0.0.7/ios
   firebase_database:
-    :path: Pods/.symlinks/plugins/firebase_database-0.4.0/ios
+    :path: Pods/.symlinks/plugins/firebase_database-0.4.1/ios
   firebase_storage:
     :path: Pods/.symlinks/plugins/firebase_storage-0.2.0/ios
   Flutter:
@@ -159,7 +159,7 @@ EXTERNAL SOURCES:
   google_sign_in:
     :path: Pods/.symlinks/plugins/google_sign_in-3.0.0/ios
   image_picker:
-    :path: Pods/.symlinks/plugins/image_picker-0.3.0/ios
+    :path: Pods/.symlinks/plugins/image_picker-0.3.1/ios
   path_provider:
     :path: Pods/.symlinks/plugins/path_provider-0.3.1/ios
   shared_preferences:

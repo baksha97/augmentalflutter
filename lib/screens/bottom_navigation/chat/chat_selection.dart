@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:io' as io;
 import 'package:augmentalflutter/models/chat_card.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as picker;
 import 'dart:math';
 
 class ChatSelection extends StatefulWidget {
@@ -124,6 +124,7 @@ class ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+
   }
 
   Widget _buildTestComposer() {
@@ -138,8 +139,8 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                    await UserAuth.ensureLoggedIn(_context);
-                    File image = await ImagePicker.pickImage();
+                   //fl await UserAuth.ensureLoggedIn(_context);
+                    io.File image = await picker.ImagePicker.pickImage();
                     int r = new Random().nextInt(100000);
                     StorageReference ref =
                         FirebaseStorage.instance.ref().child("image_$r.jpg");

@@ -1,7 +1,7 @@
 import 'package:augmentalflutter/screens/bottom_navigation/bottom_navigation.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
-import 'package:augmentalflutter/screens/bottom_navigation/profile/friend.dart';
-import 'package:augmentalflutter/screens/bottom_navigation/profile/friend_details_page.dart';
+import 'package:augmentalflutter/models/augmental_user.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/profile/profile_details_page.dart';
 import 'package:augmentalflutter/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
