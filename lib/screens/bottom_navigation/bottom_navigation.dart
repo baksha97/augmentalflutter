@@ -6,12 +6,12 @@ import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
 import 'package:augmentalflutter/models/navigation_icon_view.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/chat/chat_selection.dart';
+import 'package:augmentalflutter/screens/bottom_navigation/home/home_screen.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/unity/unity_screen.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/profile/profile_details_page.dart';
 import 'package:augmentalflutter/models/augmental_user.dart';
-
 
 class BottomNavigation extends StatefulWidget {
   static const String route = '/screens/bottom_navigation';
@@ -20,8 +20,8 @@ class BottomNavigation extends StatefulWidget {
   _BottomNavigationState createState() => new _BottomNavigationState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> with TickerProviderStateMixin {
-
+class _BottomNavigationState extends State<BottomNavigation>
+    with TickerProviderStateMixin {
   int _currentIndex = 0;
   BottomNavigationBarType _type = BottomNavigationBarType.fixed;
   List<NavigationIconView> _navigationViews;
@@ -36,38 +36,36 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
       new NavigationIconView(
         icon: const Icon(Icons.home),
         title: 'Home',
-        view: new Center(
-          child:
-          new Image.asset(
-            'assets/test.gif',
-            width: 400.0,
-            height: 400.0,
-          ),
-        ),
+        view: new HomeScreen(),
         color: barColor,
         vsync: this,
       ),
-
       new NavigationIconView(
         icon: const Icon(Icons.message),
         title: 'Chat',
-        view:  new ChatSelection(),
+        view: new ChatSelection(),
         color: barColor,
         vsync: this,
       ),
-
       new NavigationIconView(
-        icon: new Icon(Assets.unityIconData),// Constants.icon,//const Icon(Icons.remove_red_eye),
+        icon: new Icon(Assets
+            .unityIconData), // Constants.icon,//const Icon(Icons.remove_red_eye),
         title: 'Unity',
         view: new UnityChannel(),
         color: barColor,
         vsync: this,
       ),
-
       new NavigationIconView(
         icon: const Icon(Icons.person_outline),
         title: 'Profile',
-        view: new ProfileDetailsPage(new AugmentalUser(avatar: UserAuth.googleSignIn.currentUser.photoUrl, name: UserAuth.displayName, email: UserAuth.googleSignIn.currentUser.email, location: "NY"), avatarTag: 'me'),
+        view: new ProfileDetailsPage(
+          new AugmentalUser(
+              avatar: UserAuth.googleSignIn.currentUser.photoUrl,
+              name: UserAuth.displayName,
+              email: UserAuth.googleSignIn.currentUser.email,
+              location: "NY"),
+          avatarTag: 'me',
+        ),
         color: barColor,
         vsync: this,
       ),
@@ -81,8 +79,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
 
   @override
   void dispose() {
-    for (NavigationIconView view in _navigationViews)
-      view.controller.dispose();
+    for (NavigationIconView view in _navigationViews) view.controller.dispose();
     super.dispose();
   }
 
@@ -110,8 +107,6 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
     return new Stack(children: transitions);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final BottomNavigationBar botNavBar = new BottomNavigationBar(
@@ -132,9 +127,7 @@ class _BottomNavigationState extends State<BottomNavigation> with TickerProvider
 
     return new Scaffold(
       appBar: null,
-      body: new Center(
-          child: _buildTransitionsStack()
-      ),
+      body: new Center(child: _buildTransitionsStack()),
       bottomNavigationBar: botNavBar,
     );
   }

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io' as io;
-import 'package:augmentalflutter/models/chat_card.dart';
+import 'package:augmentalflutter/models/feed_card.dart';
 import 'package:augmentalflutter/services/firebase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -14,41 +14,35 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart' as picker;
 import 'dart:math';
 
-class ChatSelection extends StatefulWidget {
-  static const String route = '/screens/bottom_navigation/chat_selection';
+class HomeScreen extends StatefulWidget {
+  static const String route = '/screens/bottom_navigation/home_screen';
 
   @override
-  ChatSelectionState createState() => new ChatSelectionState();
+  _HomeScreenState createState() => new _HomeScreenState();
 }
 
-class ChatSelectionState extends State<ChatSelection> {
+class _HomeScreenState extends State<HomeScreen> {
   static const double height = 366.0;
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Scene Discussion Chat"),
+        title: new Text("Home"),
         backgroundColor: Constants.augmentalColor,
       ),
       body: new Container(
         child: new Column(
           children: <Widget>[
             new Flexible(
-              child: new StreamBuilder(
-                stream: Firestore.instance.collection('chats').snapshots,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) return new Text('Loading...');
-                  return new ListView(
-                    children: snapshot.data.documents.map<Widget>((document) {
-                      return new ListTile(
-                        title: new ChatCard(
-                          snapshot: document,
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+              child: new ListView(
+                children: <Widget>[
+                  new ListTile(
+                    //  final String username, photoURL, scoredPoints, totalPoints, percentage, time;
+
+                    title: new FeedCard(username: 'Maynard SandToast', photoURL: 'https://www.codeadvantage.org/img/bio/1I0EEVORX9.jpg', scoredPoints: 'scored', totalPoints: 'total', percentage: 'p',time: 't'),
+                  ),
+                ],
               ),
             ),
           ],
@@ -102,7 +96,7 @@ class ChatScreenState extends State<ChatScreen> {
                     reverse: true,
                     //shrinkWrap: true,
                     children: snapshot.data.documents
-                        .map<Widget>((document) {
+                        .map((document) {
                           return new ListTile(
                             title: new Bubble(snapshot: document),
                             onTap: () {},
@@ -124,7 +118,6 @@ class ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
-
   }
 
   Widget _buildTestComposer() {
@@ -139,7 +132,7 @@ class ChatScreenState extends State<ChatScreen> {
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
                   onPressed: () async {
-                   //fl await UserAuth.ensureLoggedIn(_context);
+                    //fl await UserAuth.ensureLoggedIn(_context);
                     io.File image = await picker.ImagePicker.pickImage();
                     int r = new Random().nextInt(100000);
                     StorageReference ref =
