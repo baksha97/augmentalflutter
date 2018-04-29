@@ -12,7 +12,7 @@ class UnityChannel extends StatefulWidget {
   @override
   _UnityChannelState createState() => new _UnityChannelState();
 }
-
+//
 class _UnityChannelState extends State<UnityChannel> {
   static const MethodChannel methodChannel =
       const MethodChannel('augmental.io/unity');
