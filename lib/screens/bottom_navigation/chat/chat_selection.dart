@@ -40,7 +40,7 @@ class ChatSelectionState extends State<ChatSelection> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) return new Text('Loading...');
                   return new ListView(
-                    children: snapshot.data.documents.map((document) {
+                    children: snapshot.data.documents.map<Widget>((document) {
                       return new ListTile(
                         title: new ChatCard(
                           snapshot: document,
