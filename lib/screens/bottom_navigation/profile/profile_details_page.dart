@@ -1,5 +1,6 @@
 import 'package:augmentalflutter/assets.dart';
 import 'package:augmentalflutter/constants.dart';
+import 'package:augmentalflutter/routes.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/profile/footer/profile_detail_footer.dart';
 import 'package:augmentalflutter/models/augmental_user.dart';
 import 'package:augmentalflutter/screens/bottom_navigation/profile/profile_detail_body.dart';
@@ -39,11 +40,11 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     var linearGradient = new BoxDecoration(
       gradient: new LinearGradient(
         begin: FractionalOffset.centerRight,
-        end: FractionalOffset.bottomLeft,
+        end: FractionalOffset.bottomCenter,//.bottomLeft,
         colors: [
           //const Color(0xFF413070),
           Constants.augmentalColor,
-          Colors.white,
+          Colors.black,
           //const Color(0xFF2B264A),
         ],
       ),
@@ -57,7 +58,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
           new IconButton(
             icon: new Icon(Icons.settings_power),
             tooltip: 'Sign Out',
-            onPressed: (){UserAuth.signOut();},
+            onPressed: (){
+              UserAuth.signOut(context);
+            },
           ),
         ],
       ),

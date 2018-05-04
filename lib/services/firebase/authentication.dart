@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:augmentalflutter/models/augmental_user.dart';
+import 'package:augmentalflutter/routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,10 +37,11 @@ class UserAuth {
     await analytics.logLogin();
   }
 
-  static Future<Null> signOut() async {
+  static Future<Null> signOut(BuildContext context) async {
     analytics.logEvent(name: 'logout');
     await googleSignIn.signOut();
     await FirebaseAuth.instance.signOut();
+    appRouter.pushReplacementTo(context, '/');
   }
 
   static Future<bool> isSignedIn() async {

@@ -40,7 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   new ListTile(
                     //  final String username, photoURL, scoredPoints, totalPoints, percentage, time;
 
-                    title: new FeedCard(username: 'Maynard SandToast', photoURL: 'https://www.codeadvantage.org/img/bio/1I0EEVORX9.jpg', scoredPoints: 'scored', totalPoints: 'total', percentage: 'p',time: 't'),
+                    title: new FeedCard.demoWithData(
+                      username: 'Maynard SandToast',
+                      photoURL:
+                          'https://www.codeadvantage.org/img/bio/1I0EEVORX9.jpg',
+                      scoredPoints: '100',
+                      totalPoints: '500',
+                      time: 'Time',
+                      achievements: ["ur amazon"],
+                    ),
                   ),
                 ],
               ),

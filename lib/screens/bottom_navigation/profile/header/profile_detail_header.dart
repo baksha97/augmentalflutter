@@ -113,23 +113,7 @@ class ProfileDetailHeader extends StatelessWidget {
             ],
           ),
         ),
-        new Positioned(
-          top: 26.0,
-          right: 4.0,
-          child: new FlatButton(
-            child: const Text(
-              'Sign Out',
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: (){
-              UserAuth.signOut();
-              },
-            //color: Colors.white,
-          ),
-        ),
+
       ],
     );
   }

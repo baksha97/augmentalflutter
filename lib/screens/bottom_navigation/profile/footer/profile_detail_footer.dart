@@ -25,12 +25,10 @@ class _ProfileShowcaseState extends State<ProfileShowcase>
     _tabs = [
       new Tab(text: 'Portfolio'),
       new Tab(text: 'Skills'),
-      new Tab(text: 'Articles'),
     ];
     _pages = [
       new PortfolioShowcase(),
       new SkillsShowcase(),
-      new ArticlesShowcase(),
     ];
     _controller = new TabController(
       length: _tabs.length,
