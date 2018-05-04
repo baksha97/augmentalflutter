@@ -16,7 +16,7 @@ class FeedCard extends StatelessWidget {
 
   final String username, photoURL, scoredPoints, totalPoints, percentage, time;
   final List<String> achievements;
-  final GlobalKey<AnimatedCircularChartState> chartKey;
+  //final GlobalKey<AnimatedCircularChartState> chartKey;
 
   final CircularStackEntry data;
 
@@ -53,8 +53,7 @@ FeedCard.demoWithData({this.username, this.photoURL,this.scoredPoints,this.total
                     child: new Row(
                       children: <Widget>[
                         new CircleAvatar(
-                          backgroundImage:
-                              new CachedNetworkImageProvider(photoURL),
+                          backgroundImage: new CachedNetworkImageProvider(photoURL),
                           radius: 40.0,
                         ),
                         new Padding(
@@ -81,7 +80,7 @@ FeedCard.demoWithData({this.username, this.photoURL,this.scoredPoints,this.total
                     //overflow: TextOverflow.ellipsis,
                     style: descriptionStyle,
                     child: new AnimatedCircularChart(
-                      key: new GlobalKey<AnimatedCircularChartState>(),
+                    //  key: new GlobalKey<AnimatedCircularChartState>(),
                       size: const Size(300.0, 300.0),
                       initialChartData: <CircularStackEntry>[data],
                       chartType: CircularChartType.Pie,
