@@ -1,8 +1,5 @@
 import 'package:augmentalflutter/constants.dart';
-import 'package:augmentalflutter/routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
@@ -26,20 +23,15 @@ class FeedCard extends StatelessWidget {
 
 FeedCard.demoWithData({this.username, this.photoURL,this.scoredPoints,this.totalPoints,this.time,this.achievements}):
    // int failure = totalPoints - earnedPoints;
-  percentage = "wat";
-  data = new CircularStackEntry(
-          <CircularSegmentEntry>[
-            new CircularSegmentEntry((double.parse(scoredPoints)), Constants.augmentalColor, rankKey: 'success'),
-            new CircularSegmentEntry((double.parse(totalPoints) - (double.parse(scoredPoints))), Colors.red[300], rankKey: 'failure'),
-          ],
-          rankKey: 'Chart',
-        );
+      data = new CircularStackEntry(
+              <CircularSegmentEntry>[
+                new CircularSegmentEntry((double.parse(scoredPoints)), Constants.augmentalColor, rankKey: 'success'),
+                new CircularSegmentEntry((double.parse(totalPoints) - (double.parse(scoredPoints))), Colors.red[300], rankKey: 'failure'),
+              ],
+              rankKey: 'Chart',
+            ),
+      percentage = (double.parse(totalPoints) - double.parse(scoredPoints)).toString();
 
-
-
-  CircularSegmentEntry _fromAchievement(String achievement){
-
-  }
 
   @override
   Widget build(BuildContext context) {
