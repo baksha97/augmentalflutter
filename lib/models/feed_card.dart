@@ -18,29 +18,28 @@ class FeedCard extends StatelessWidget {
   //       documentID = snapshot.documentID;
 
   final String username, photoURL, scoredPoints, totalPoints, percentage, time;
+  final List<String> achievements;
   final GlobalKey<AnimatedCircularChartState> chartKey;
-  List<CircularStackEntry> get data => <CircularStackEntry>[
-        new CircularStackEntry(
-          <CircularSegmentEntry>[
-            new CircularSegmentEntry(500.0, Colors.red[200], rankKey: 'Q1'),
-            new CircularSegmentEntry(1000.0, Colors.green[200], rankKey: 'Q2'),
-            new CircularSegmentEntry(2000.0, Colors.blue[200], rankKey: 'Q3'),
-            new CircularSegmentEntry(1000.0, Colors.yellow[200], rankKey: 'Q4'),
-          ],
-          rankKey: 'Quarterly Profits',
-        ),
-      ];
 
-  const FeedCard(
-      {Key key,
-      this.username,
-      this.photoURL,
-      this.scoredPoints,
-      this.totalPoints,
-      this.percentage,
-      this.time,
-      this.chartKey})
-      : super(key: key);
+  final CircularStackEntry data;
+
+
+FeedCard.demoWithData({this.username, this.photoURL,this.scoredPoints,this.totalPoints,this.time,this.achievements}):
+   // int failure = totalPoints - earnedPoints;
+  percentage = "wat";
+  data = new CircularStackEntry(
+          <CircularSegmentEntry>[
+            new CircularSegmentEntry((double.parse(scoredPoints)), Constants.augmentalColor, rankKey: 'success'),
+            new CircularSegmentEntry((double.parse(totalPoints) - (double.parse(scoredPoints))), Colors.red[300], rankKey: 'failure'),
+          ],
+          rankKey: 'Chart',
+        );
+
+
+
+  CircularSegmentEntry _fromAchievement(String achievement){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +55,27 @@ class FeedCard extends StatelessWidget {
             new Row(
               children: <Widget>[
                 new Container(
-                  margin: const EdgeInsets.only(right: 1.0),
+                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
                   child: new Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 0.0),
-                    child: new CircleAvatar(
-                      backgroundImage: new CachedNetworkImageProvider(photoURL),
-                      radius: 40.0,
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: new Row(
+                      children: <Widget>[
+                        new CircleAvatar(
+                          backgroundImage:
+                              new CachedNetworkImageProvider(photoURL),
+                          radius: 40.0,
+                        ),
+                        new Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Text(username),
+                              new Text(time),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -70,147 +84,23 @@ class FeedCard extends StatelessWidget {
             new Row(
               children: <Widget>[
                 new Expanded(
-                    child: new DefaultTextStyle(
-                      softWrap: true,
-                      //overflow: TextOverflow.ellipsis,
-                      style: descriptionStyle,
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          // three line description
-                          new Container(
-                            padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
-                            //height: 100.0,
-                            child: new SingleChildScrollView(
-                              child: new Text(
-                                'Stats for: '+username,
-                                softWrap: true,
-                                style: descriptionStyle.copyWith(
-                                  color: Colors.black,
-                                  //decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          ),
-                          new AnimatedCircularChart(
-                            key: new GlobalKey<AnimatedCircularChartState>(),
-                            size: const Size(300.0, 300.0),
-                            initialChartData: data,
-                            chartType: CircularChartType.Pie,
-                          )
-                        ],
-                      ),
+                  child: new DefaultTextStyle(
+                    softWrap: true,
+                    //overflow: TextOverflow.ellipsis,
+                    style: descriptionStyle,
+                    child: new AnimatedCircularChart(
+                      key: new GlobalKey<AnimatedCircularChartState>(),
+                      size: const Size(300.0, 300.0),
+                      initialChartData: <CircularStackEntry>[data],
+                      chartType: CircularChartType.Pie,
                     ),
+                  ),
                 ),
               ],
             ),
+            //new Row -> add icon -> # Achievements; set onTap() for text OR if not, put row inside of a container and set the onTap(){}
           ],
         ));
   }
 
-  //   return new SafeArea(
-  //     top: false,
-  //     bottom: false,
-  //     child: new Container(
-  //       padding: const EdgeInsets.all(8.0),
-  //       height: height,
-  //       child: new Card(
-  //         color: Colors.grey.shade50,
-  //         child: new Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: <Widget>[
-  //             // photo and title
-  //             // new SizedBox(
-  //             //   height: 184.0,
-  //             //   child: new Stack(
-  //             //     children: <Widget>[
-  //             //       new Positioned.fill(
-  //             //         child: new CachedNetworkImage(
-  //             //           imageUrl: imageUrl,
-  //             //           placeholder: new CircularProgressIndicator(),
-  //             //           errorWidget: new Icon(Icons.error),
-  //             //         ),
-  //             //       ),
-  //             //       new Positioned(
-  //             //         bottom: 16.0,
-  //             //         left: 16.0,
-  //             //         right: 16.0,
-  //             //         child: new FittedBox(
-  //             //           fit: BoxFit.scaleDown,
-  //             //           alignment: Alignment.bottomLeft,
-  //             //           child: new Text(
-  //             //             name,
-  //             //             style: titleStyle,
-  //             //           ),
-  //             //         ),
-  //             //       ),
-  //             //     ],
-  //             //   ),
-  //             // ),
-  //             // description and share/explore buttons
-  //             new Expanded(
-  //               child: new Padding(
-  //                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-  //                 child: new DefaultTextStyle(
-  //                   softWrap: true,
-  //                   //overflow: TextOverflow.ellipsis,
-  //                   style: descriptionStyle,
-  //                   child: new Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                     children: <Widget>[
-  //                       // three line description
-  //                       new Padding(
-  //                         padding: const EdgeInsets.only(bottom: 8.0),
-  //                         child: new Text(
-  //                           subtitle,
-  //                           style: descriptionStyle.copyWith(
-  //                             color: Colors.black,
-  //                             decoration: TextDecoration.underline,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                       new Container(
-  //                         padding: const EdgeInsets.all(5.0),
-  //                         decoration: new BoxDecoration(
-  //                           color: Colors.white,
-  //                         ),
-  //                         height: 147.0,
-  //                         child: new SingleChildScrollView(
-  //                           child: new Text(
-  //                             description,
-  //                             softWrap: true,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //             // share, explore buttons
-  //             new ButtonTheme.bar(
-  //               child: new ButtonBar(
-  //                 alignment: MainAxisAlignment.end,
-  //                 children: <Widget>[
-  //                   new FlatButton(
-  //                     child: const Text(
-  //                       'CHAT',
-  //                       style: const TextStyle(
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                     textColor: Constants.augmentalColor,
-  //                     onPressed: () {},
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
