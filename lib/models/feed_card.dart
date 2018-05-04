@@ -26,11 +26,11 @@ FeedCard.demoWithData({this.username, this.photoURL,this.scoredPoints,this.total
       data = new CircularStackEntry(
               <CircularSegmentEntry>[
                 new CircularSegmentEntry((double.parse(scoredPoints)), Constants.augmentalColor, rankKey: 'success'),
-                new CircularSegmentEntry((double.parse(totalPoints) - (double.parse(scoredPoints))), Colors.red[300], rankKey: 'failure'),
+                new CircularSegmentEntry(9.0, Colors.red[300], rankKey: 'failure'),
               ],
               rankKey: 'Chart',
             ),
-      percentage = (double.parse(totalPoints) - double.parse(scoredPoints)).toString();
+      percentage = "";//(double.parse(totalPoints) - double.parse(scoredPoints)).toString();
 
 
   @override
