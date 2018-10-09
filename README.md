@@ -1,6 +1,7 @@
 # augmentalflutter
 
-A new Flutter project.
+This project has discontinued due to the requirements of building the unity application inside of the Xcode project. 
+If you are interested, a presentation is located [here for the efforts of the project](https://prezi.com/view/z4v1m6Yi5AvZxM3EBPLs/).
 
 ## Getting Started
 
